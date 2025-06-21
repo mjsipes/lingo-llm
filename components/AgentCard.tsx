@@ -14,17 +14,19 @@ const AgentCard = ({
   title,
   image,
   welcomeMessage,
+  systemPrompt,
 }: {
   name: string;
   title: string;
   image: string;
   welcomeMessage: string;
+  systemPrompt: string;
 }) => {
   const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, append } = useChat({
     api: '/api/chat',
     body: {
       model: 'groq',
-      systemPrompt:'respond in earth noises'
+      systemPrompt: systemPrompt
     }
   });
   const [isOpen, setIsOpen] = useState(false);

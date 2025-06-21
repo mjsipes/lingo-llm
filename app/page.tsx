@@ -154,6 +154,7 @@ export default function Home() {
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
                   messages={messages}
                   selectedText={selectedText}
+                  systemPrompt="respond in earth noises"
                 />
                 <AgentCard 
                   name="AI Lion" 
@@ -162,6 +163,7 @@ export default function Home() {
                   welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
                   messages={messages}
                   selectedText={selectedText}
+                  systemPrompt="respond in earth noises"
                 />
                 <AgentCard 
                   name="AI Bees" 
@@ -170,6 +172,7 @@ export default function Home() {
                   welcomeMessage="Hello! I will help with vocabulary building. Highlight the text you want me to explain, then click on my icon!"
                   messages={messages}
                   selectedText={selectedText}
+                  systemPrompt="respond in earth noises"
                 />
               </div>
             </div>
