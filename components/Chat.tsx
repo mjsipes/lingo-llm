@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useChat } from "@ai-sdk/react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,15 +14,25 @@ import {
 } from "@/components/ui/tooltip";
 import ReactMarkdown from "react-markdown";
 
-export function Chat() {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    setMessages,
-  } = useChat();
+interface ChatProps {
+  messages: any[];
+  input: string;
+  handleInputChange: (e: any) => void;
+  handleSubmit: (e: any) => void;
+  isLoading: boolean;
+  setMessages: (messages: any[]) => void;
+  selectedText: string;
+}
+
+export function Chat({ 
+  messages, 
+  input, 
+  handleInputChange, 
+  handleSubmit, 
+  isLoading, 
+  setMessages,
+  selectedText 
+}: ChatProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const starterMessages = [
@@ -49,6 +58,7 @@ export function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -93,11 +103,6 @@ export function Chat() {
         <div className="flex-1">
           <div className="flex items-baseline gap-1">
             <span className="font-medium text-sm">Pingu Penguin</span>
-            {/* {isLoading && (
-              <span className="text-xs text-muted-foreground">
-                is thinking...
-              </span>
-            )} */}
           </div>
         </div>
         <Tooltip>
@@ -252,31 +257,6 @@ export function Chat() {
           </div>
         </ScrollArea>
       </div>
-
-      {/* Starter Messages */}
-      {/* {messages.length === 0 && (
-        <div className="flex flex-col gap-2 px-4 pt-2 pb-1 bg-background w-full">
-          <div className="flex gap-2 flex-wrap">
-            {starterMessages.map((msg, idx) => (
-              <button
-                key={msg}
-                type="button"
-                onClick={() => handleSendStarterMessage(msg)}
-                className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50
-                  ${
-                    idx % 2 === 0
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-secondary text-secondary-foreground border-secondary"
-                  }
-                `}
-                disabled={isLoading}
-              >
-                {msg}
-              </button>
-            ))}
-          </div>
-        </div>
-      )} */}
 
       {/* Input */}
       <div className="px-4 pb-4 pt-2 w-full">

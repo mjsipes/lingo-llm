@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useChat } from "@ai-sdk/react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
@@ -18,16 +22,65 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { toast } from "sonner";
 
 export default function Home() {
   const images = ["/owl2.png", "/lion2.png", "/bees.png"];
+  
+  // Lifted chat state
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+  } = useChat();
+
+  // Selected text state
+  const [selectedText, setSelectedText] = useState('');
+  
+  useEffect(() => {
+    const handleSelection = () => {
+      const selection = window.getSelection()?.toString() || '';
+      setSelectedText(selection);
+      if (selection) {
+        console.log('Selected text:', selection);
+      }
+    };
+
+    document.addEventListener('mouseup', handleSelection);
+    document.addEventListener('keyup', handleSelection);
+
+    return () => {
+      document.removeEventListener('mouseup', handleSelection);
+      document.removeEventListener('keyup', handleSelection);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (selectedText) {
+  //     toast("Text Selected", {
+  //       description: selectedText.length > 50 ? `${selectedText.substring(0, 50)}...` : selectedText,
+  //       position: "top-right",
+  //     });
+  //   }
+  //  }, [selectedText]);
 
   return (
     <div className="h-screen overflow-hidden">
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
         <ResizablePanel defaultSize={36} minSize={25} maxSize={50}>
           <div className="h-screen overflow-hidden">
-            <Chat />
+            <Chat 
+              messages={messages}
+              input={input}
+              handleInputChange={handleInputChange}
+              handleSubmit={handleSubmit}
+              isLoading={isLoading}
+              setMessages={setMessages}
+              selectedText={selectedText}
+            />
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
@@ -59,7 +112,6 @@ export default function Home() {
                           />
                         </div>
                       ))}
-                      {/* Add more images to test scrolling */}
                       {images.map((image, index) => (
                         <div key={`${image}-${index}`} className="w-full">
                           <Image
@@ -86,15 +138,33 @@ export default function Home() {
                   </ScrollArea>
                 </div>
               </div>
-              {/* Row 6-7: Empty space for tooltips (2 rows) */}
-              {/* <div className="row-span-1 bg-blue-500">
-              </div> */}
 
               {/* Row 8: Agent Controls */}
               <div className="row-span-1 bg-green-500 flex flex-row gap-2 items-center justify-center">
-                <AgentCard name="AI Owl" title="Language & Pronunciation Coach" image="/owl2.png" welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!" />
-                <AgentCard name="AI Owl" title="Language & Pronunciation Coach" image="/lion2.png" welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!" />
-                <AgentCard name="AI Owl" title="Language & Pronunciation Coach" image="/bees.png" welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!" />
+                <AgentCard 
+                  name="AI Owl" 
+                  title="Language & Pronunciation Coach" 
+                  image="/owl2.png" 
+                  welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
+                  messages={messages}
+                  selectedText={selectedText}
+                />
+                <AgentCard 
+                  name="AI Lion" 
+                  title="Grammar & Translation Expert" 
+                  image="/lion2.png" 
+                  welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
+                  messages={messages}
+                  selectedText={selectedText}
+                />
+                <AgentCard 
+                  name="AI Bees" 
+                  title="Vocabulary Builder" 
+                  image="/bees.png" 
+                  welcomeMessage="Hello! I will help with vocabulary building. Highlight the text you want me to explain, then click on my icon!"
+                  messages={messages}
+                  selectedText={selectedText}
+                />
               </div>
             </div>
           </div>
