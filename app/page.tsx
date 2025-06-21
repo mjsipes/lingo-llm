@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-// import AgentCard from "@/components/AgentCard";
+import AgentCard from "@/components/AgentCard";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
@@ -92,7 +92,9 @@ export default function Home() {
 
               {/* Row 8: Agent Controls */}
               <div className="row-span-1 bg-green-500 flex flex-row gap-2 items-center justify-center">
-                hello world
+                <AgentCard name="AI Owl" title="Language & Pronunciation Coach" image="/owl2.png" welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!" />
+                <AgentCard name="AI Owl" title="Language & Pronunciation Coach" image="/lion2.png" welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!" />
+                <AgentCard name="AI Owl" title="Language & Pronunciation Coach" image="/bees.png" welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!" />
               </div>
             </div>
           </div>
