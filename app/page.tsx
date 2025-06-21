@@ -42,27 +42,35 @@ export default function Home() {
   
   useEffect(() => {
     const handleSelection = async () => {
+      console.log("handleSelection triggered");
       const selection = window.getSelection()?.toString() || '';
+      console.log(' selection: ', selection);
       setSelectedText(selection);
       if (selection) {
-        console.log('Selected text:', selection);
         try {
           await navigator.clipboard.writeText(selection);
-          console.log('Copied to clipboard');
+          console.log(" copied to clipboard");
         } catch (err) {
-          console.log('Failed to copy');
+          console.log(' failed to copy');
         }
       }
     };
-  
-    document.addEventListener('mouseup', handleSelection);
+   
+    const handleMouseUp = () => {
+      const selection = window.getSelection()?.toString();
+      if (selection && selection.length > 0) {
+        handleSelection();
+      }
+    };
+   
+    document.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('keyup', handleSelection);
-  
+   
     return () => {
-      document.removeEventListener('mouseup', handleSelection);
+      document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('keyup', handleSelection);
     };
-  }, []);
+   }, []);
 
   useEffect(() => {
     if (selectedText) {
