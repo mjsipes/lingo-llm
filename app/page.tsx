@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import AgentCard from "@/components/AgentCard";
+import AgentCardFrog from "@/components/AgentCardFrog";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
@@ -27,7 +28,6 @@ import { toast } from "sonner";
 export default function Home() {
   const images = ["/owl2.png", "/lion2.png", "/bees.png"];
   
-  // Lifted chat state
   const {
     messages,
     input,
@@ -37,8 +37,8 @@ export default function Home() {
     setMessages,
   } = useChat();
 
-  // Selected text state
   const [selectedText, setSelectedText] = useState('');
+  const [textareaContent, setTextareaContent] = useState('');
   
   useEffect(() => {
     const handleSelection = async () => {
@@ -79,6 +79,10 @@ export default function Home() {
     }
    }, [selectedText]);
 
+  const handleStoryBuilderResponse = (response: string) => {
+    setTextareaContent(response);
+  };
+
   return (
     <div className="h-screen overflow-hidden">
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
@@ -98,18 +102,36 @@ export default function Home() {
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={75} className="h-full">
           <div className="flex flex-col h-full">
-            {/* Header */}
             <div className="py-[10px] border-b flex-shrink-0">
               <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
                 lingo llm
               </h1>
             </div>
             <div className="grid grid-rows-8 p-4 gap-2 flex-1 min-h-0 bg-gray-200">
-              {/* Row 1: Agent Buttons */}
-              <div className="row-span-1 bg-red-200">agent buttons</div>
-              {/* Row 2-5: Story Builder (4 rows) */}
+              {/* upper row of agents */}
+              <div className="row-span-1 bg-red-200 grid grid-cols-2">
+  <div className="flex items-center justify-center">
+    <AgentCardFrog 
+      name="Ribbit the Writer" 
+      title="Creative Writing Assistant" 
+      image="/frog.png" 
+      welcomeMessage="I'll help you build stories! Click me to generate content for your story."
+      userPrompt="Generate a creative story opening based on the theme of adventure"
+      systemPrompt="You are a creative writing assistant. Generate engaging story content that is appropriate for language learning. Keep responses concise and imaginative."
+      onResponse={handleStoryBuilderResponse}
+    />
+  </div>
+  <div className="flex items-center justify-center">
+    <div>hi</div>
+  </div>
+</div>
+              {/* story building area */}
               <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
-                <Textarea className="bg-white border-0 focus-visible:ring-0 rounded-none resize-none h-full" />
+                <Textarea 
+                  className="bg-white border-0 focus-visible:ring-0 rounded-none resize-none h-full" 
+                  value={textareaContent}
+                  onChange={(e) => setTextareaContent(e.target.value)}
+                />
                 <div className="bg-blue-500 min-h-0">
                   <ScrollArea className="h-full">
                     <div className="p-4 grid grid-cols-2 gap-2">
@@ -151,8 +173,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Row 8: Agent Controls */}
-              <div className="row-span-1 bg-green-500 flex flex-row gap-2 items-center justify-center">
+              <div className="row-span-1 bg-green-500 flex flex-row gap-10 items-center justify-center">
                 <AgentCard 
                   name="AI Owl" 
                   title="Language & Pronunciation Coach" 
