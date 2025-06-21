@@ -41,9 +41,9 @@ export default function Home() {
             </div>
             <div className="grid grid-rows-8 p-4 gap-2 flex-1 min-h-0 bg-gray-200">
               {/* Row 1: Agent Buttons */}
-              <div className="row-span-1">agent buttons</div>
+              <div className="row-span-1 bg-red-200">agent buttons</div>
               {/* Row 2-5: Story Builder (4 rows) */}
-              <div className="row-span-4 bg-red-500 grid grid-cols-2 min-h-0">
+              <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
                 <Textarea className="bg-white border-0 focus-visible:ring-0 rounded-none resize-none h-full" />
                 <div className="bg-blue-500 min-h-0">
                   <ScrollArea className="h-full">
@@ -87,9 +87,8 @@ export default function Home() {
                 </div>
               </div>
               {/* Row 6-7: Empty space for tooltips (2 rows) */}
-              <div className="row-span-2 bg-blue-500">
-                {/* Reserved space for AI agent tooltip responses */}
-              </div>
+              {/* <div className="row-span-1 bg-blue-500">
+              </div> */}
 
               {/* Row 8: Agent Controls */}
               <div className="row-span-1 bg-green-500 flex flex-row gap-2 items-center justify-center">
