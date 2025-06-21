@@ -161,7 +161,7 @@ export default function Home() {
                   image="/owl2.png" 
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
                   userPrompt={selectedText}
-                  systemPrompt="Echo back the user input"
+                  systemPrompt="Echo back the user input. "
                 />
                 <AgentCard 
                   name="AI Lion" 

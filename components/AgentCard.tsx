@@ -37,14 +37,10 @@ const AgentCard = ({
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("clicked");
+    console.log(`Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`);
     if (isLoading) return;
-    
     setIsOpen(true);
-    
-    const messageContent = userPrompt || 'hello';
-    console.log("messageContent", messageContent);
-    
+    const messageContent = userPrompt || "hello";
     await append({
       id: Date.now().toString(),
       role: 'user',
