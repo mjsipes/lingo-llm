@@ -152,16 +152,14 @@ export default function Home() {
                   title="Language & Pronunciation Coach" 
                   image="/owl2.png" 
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
-                  messages={messages}
                   selectedText={selectedText}
-                  systemPrompt="respond in earth noises"
+                  systemPrompt="Echo back the user input"
                 />
                 <AgentCard 
                   name="AI Lion" 
                   title="Grammar & Translation Expert" 
                   image="/lion2.png" 
                   welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
-                  messages={messages}
                   selectedText={selectedText}
                   systemPrompt="respond in earth noises"
                 />
@@ -170,7 +168,6 @@ export default function Home() {
                   title="Vocabulary Builder" 
                   image="/bees.png" 
                   welcomeMessage="Hello! I will help with vocabulary building. Highlight the text you want me to explain, then click on my icon!"
-                  messages={messages}
                   selectedText={selectedText}
                   systemPrompt="respond in earth noises"
                 />

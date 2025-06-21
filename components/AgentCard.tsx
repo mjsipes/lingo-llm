@@ -15,20 +15,24 @@ const AgentCard = ({
   image,
   welcomeMessage,
   systemPrompt,
+  selectedText,
 }: {
   name: string;
   title: string;
   image: string;
   welcomeMessage: string;
   systemPrompt: string;
+  selectedText: string;
 }) => {
+
   const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, append } = useChat({
     api: '/api/chat',
     body: {
       model: 'groq',
-      systemPrompt: systemPrompt
+      systemPrompt: systemPrompt,
     }
   });
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async (e: React.MouseEvent) => {
@@ -38,11 +42,13 @@ const AgentCard = ({
     
     setIsOpen(true);
     
-    // Use append to directly send the message
+    const messageContent = selectedText || 'hello';
+    console.log("messageContent", messageContent);
+    
     await append({
       id: Date.now().toString(),
       role: 'user',
-      content: 'hello'
+      content: messageContent
     });
   };
 

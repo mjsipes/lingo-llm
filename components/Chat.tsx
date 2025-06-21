@@ -65,15 +65,6 @@ export function Chat({
     setMessages([]);
   };
 
-  const handleSendStarterMessage = (starterMsg: string) => {
-    if (isLoading) return;
-    handleInputChange({ target: { value: starterMsg } } as any);
-    setTimeout(() => {
-      const form = document.createElement("form");
-      const event = new Event("submit", { bubbles: true, cancelable: true });
-      handleSubmit(event as any);
-    }, 0);
-  };
 
   return (
     <div className="flex flex-col h-full w-full bg-background">
