@@ -32,6 +32,12 @@ export default function Home() {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={75}>
+          {/* Header */}
+          <div className="py-[10px] border-b">
+              <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
+                lingo llm
+              </h1>
+            </div>
           <div className="col-span-2 grid grid-rows-8 p-4 gap-2 h-screen bg-gray-200">
             {/* Row 1: Agent Buttons */}
             <div className="row-span-1 ">agent buttons</div>
