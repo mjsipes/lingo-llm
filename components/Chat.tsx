@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useChat } from '@ai-sdk/react';
+import { useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,7 +16,14 @@ import {
 import ReactMarkdown from "react-markdown";
 
 export function Chat() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages } = useChat();
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+  } = useChat();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const starterMessages = [
@@ -29,7 +36,7 @@ export function Chat() {
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
       const scrollContainer = scrollAreaRef.current.querySelector(
-        "[data-slot='scroll-area-viewport']",
+        "[data-slot='scroll-area-viewport']"
       ) as HTMLElement | null;
       if (scrollContainer) {
         setTimeout(() => {
@@ -58,8 +65,8 @@ export function Chat() {
     if (isLoading) return;
     handleInputChange({ target: { value: starterMsg } } as any);
     setTimeout(() => {
-      const form = document.createElement('form');
-      const event = new Event('submit', { bubbles: true, cancelable: true });
+      const form = document.createElement("form");
+      const event = new Event("submit", { bubbles: true, cancelable: true });
       handleSubmit(event as any);
     }, 0);
   };
@@ -67,7 +74,7 @@ export function Chat() {
   return (
     <div className="flex flex-col h-full w-full bg-background">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b"> 
+      <div className="flex items-center gap-3 px-4 py-3 border-b">
         <Tooltip>
           <TooltipTrigger asChild>
             <Avatar className="h-8 w-8">
@@ -84,11 +91,15 @@ export function Chat() {
           </TooltipContent>
         </Tooltip>
         <div className="flex-1">
-          <div className="font-medium text-sm">AI Penguin</div>
-          {isLoading && (
-            <div className="text-xs text-muted-foreground">Thinking...</div>
-          )}
-        </div>
+  <div className="flex items-baseline gap-1">
+    <span className="font-medium text-sm">Pingu Penguin</span>
+    {/* {isLoading && (
+      <span className="text-xs text-muted-foreground">
+        is thinking.
+      </span>
+    )} */}
+  </div>
+</div>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="ghost" size="icon" onClick={handleNewChat}>
@@ -115,20 +126,26 @@ export function Chat() {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.role === 'user' ? "justify-end" : "justify-start"}`}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
               >
                 <div
                   className={`rounded-lg px-3 py-2 text-sm shadow-sm transition-all duration-200
-                    ${message.role === 'user' ? "bg-primary text-primary-foreground ml-auto" : "bg-muted mr-auto"}
+                    ${
+                      message.role === "user"
+                        ? "bg-primary text-primary-foreground ml-auto"
+                        : "bg-muted mr-auto"
+                    }
                     ${message.content.length > 120 ? "w-full" : "max-w-[80%]"}
                   `}
                 >
-                  {message.role === 'user' ? (
+                  {message.role === "user" ? (
                     message.content
                   ) : (
                     <div className="prose prose-sm max-w-none dark:prose-invert">
                       {message.parts?.map((part, index) => {
-                        if (part.type === 'text') {
+                        if (part.type === "text") {
                           return (
                             <ReactMarkdown
                               key={index}
@@ -176,7 +193,7 @@ export function Chat() {
                             </ReactMarkdown>
                           );
                         }
-                        if (part.type === 'reasoning') {
+                        if (part.type === "reasoning") {
                           return null;
                         }
                         return null;
@@ -272,12 +289,12 @@ export function Chat() {
               onKeyPress={handleKeyPress}
               disabled={isLoading}
             />
-            <Button 
+            <Button
               type="submit"
               onClick={handleSubmit}
               disabled={!input.trim() || isLoading}
               size="sm"
-              className= "h-8 w-8"
+              className="h-8 w-8"
             >
               <ArrowUp className="w-4 h-4" />
             </Button>
