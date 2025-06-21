@@ -64,13 +64,11 @@ export default function Home() {
     };
    
     document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('keyup', handleSelection);
    
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('keyup', handleSelection);
     };
-   }, []);
+  }, []);
 
   useEffect(() => {
     if (selectedText) {
@@ -160,24 +158,24 @@ export default function Home() {
                   title="Language & Pronunciation Coach" 
                   image="/owl2.png" 
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
-                  userPrompt={selectedText}
-                  systemPrompt="Echo back the user input. "
+                  userPrompt={selectedText || "hello"}
+                  systemPrompt="Pronounce the users text in a way for a child to understand. For example: hello = huh-LOH. Only respond with the pronunciation. Do not include any other text."
                 />
                 <AgentCard 
                   name="AI Lion" 
                   title="Grammar & Translation Expert" 
                   image="/lion2.png" 
                   welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
-                  userPrompt={selectedText}
+                  userPrompt={selectedText || "hello"}
                   systemPrompt="respond in earth noises"
                 />
                 <AgentCard 
                   name="AI Bees" 
                   title="Vocabulary Builder" 
                   image="/bees.png" 
-                  welcomeMessage="Hello! I will help with vocabulary building. Highlight the text you want me to explain, then click on my icon!"
-                  userPrompt={selectedText}
-                  systemPrompt="respond in earth noises"
+                  welcomeMessage="We will help send your book out to the world!"
+                  userPrompt="make buzzing noises like a bee"
+                  systemPrompt="make buzzing noises like a bee"
                 />
               </div>
             </div>

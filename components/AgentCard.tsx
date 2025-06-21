@@ -40,11 +40,10 @@ const AgentCard = ({
     console.log(`Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`);
     if (isLoading) return;
     setIsOpen(true);
-    const messageContent = userPrompt || "hello";
     await append({
       id: Date.now().toString(),
       role: 'user',
-      content: messageContent
+      content: userPrompt
     });
   };
 
