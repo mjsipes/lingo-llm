@@ -158,7 +158,7 @@ export default function Home() {
                   title="Language & Pronunciation Coach" 
                   image="/owl2.png" 
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
-                  userPrompt={selectedText || "hello"}
+                  userPrompt={selectedText || "Hello"}
                   systemPrompt="Pronounce the users text in a way for a child to understand. For example: hello = huh-LOH. Only respond with the pronunciation. Do not include any other text."
                 />
                 <AgentCard 
