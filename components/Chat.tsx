@@ -35,12 +35,6 @@ export function Chat({
 }: ChatProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  const starterMessages = [
-    "get my layers",
-    "what is the weather outside today",
-    "rank my outfits from warmest to coolest",
-    "whats my best outfit for 22 degree weather",
-  ];
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -148,106 +142,49 @@ export function Chat({
                           Thinking...
                         </span>
                       ) : (
-                        <>
-                          {message.parts?.map((part, partIndex) => {
-                            if (part.type === "text") {
-                              return (
-                                <ReactMarkdown
-                                  key={partIndex}
-                                  components={{
-                                    p: ({ children }) => (
-                                      <p className="mb-2 last:mb-0">{children}</p>
-                                    ),
-                                    code: ({ children }) => (
-                                      <code className="bg-muted-foreground/20 px-1 py-0.5 rounded text-xs">
-                                        {children}
-                                      </code>
-                                    ),
-                                    pre: ({ children }) => (
-                                      <pre className="bg-muted-foreground/20 p-2 rounded overflow-x-auto text-xs">
-                                        {children}
-                                      </pre>
-                                    ),
-                                    ul: ({ children }) => (
-                                      <ul className="ml-4 mb-2">{children}</ul>
-                                    ),
-                                    ol: ({ children }) => (
-                                      <ol className="ml-4 mb-2">{children}</ol>
-                                    ),
-                                    li: ({ children }) => (
-                                      <li className="mb-1">{children}</li>
-                                    ),
-                                    h1: ({ children }) => (
-                                      <h1 className="text-base font-bold mb-2">
-                                        {children}
-                                      </h1>
-                                    ),
-                                    h2: ({ children }) => (
-                                      <h2 className="text-sm font-bold mb-2">
-                                        {children}
-                                      </h2>
-                                    ),
-                                    h3: ({ children }) => (
-                                      <h3 className="text-sm font-semibold mb-1">
-                                        {children}
-                                      </h3>
-                                    ),
-                                  }}
-                                >
-                                  {part.text}
-                                </ReactMarkdown>
-                              );
-                            }
-                            if (part.type === "reasoning") {
-                              return null;
-                            }
-                            return null;
-                          }) || (
-                            <ReactMarkdown
-                              components={{
-                                p: ({ children }) => (
-                                  <p className="mb-2 last:mb-0">{children}</p>
-                                ),
-                                code: ({ children }) => (
-                                  <code className="bg-muted-foreground/20 px-1 py-0.5 rounded text-xs">
-                                    {children}
-                                  </code>
-                                ),
-                                pre: ({ children }) => (
-                                  <pre className="bg-muted-foreground/20 p-2 rounded overflow-x-auto text-xs">
-                                    {children}
-                                  </pre>
-                                ),
-                                ul: ({ children }) => (
-                                  <ul className="ml-4 mb-2">{children}</ul>
-                                ),
-                                ol: ({ children }) => (
-                                  <ol className="ml-4 mb-2">{children}</ol>
-                                ),
-                                li: ({ children }) => (
-                                  <li className="mb-1">{children}</li>
-                                ),
-                                h1: ({ children }) => (
-                                  <h1 className="text-base font-bold mb-2">
-                                    {children}
-                                  </h1>
-                                ),
-                                h2: ({ children }) => (
-                                  <h2 className="text-sm font-bold mb-2">
-                                    {children}
-                                  </h2>
-                                ),
-                                h3: ({ children }) => (
-                                  <h3 className="text-sm font-semibold mb-1">
-                                    {children}
-                                  </h3>
-                                ),
-                              }}
-                            >
-                              {message.content}
-                            </ReactMarkdown>
-                          )}
-                        </>
+                        <ReactMarkdown
+                          components={{
+                            p: ({ children }) => (
+                              <p className="mb-2 last:mb-0">{children}</p>
+                            ),
+                            code: ({ children }) => (
+                              <code className="bg-muted-foreground/20 px-1 py-0.5 rounded text-xs">
+                                {children}
+                              </code>
+                            ),
+                            pre: ({ children }) => (
+                              <pre className="bg-muted-foreground/20 p-2 rounded overflow-x-auto text-xs">
+                                {children}
+                              </pre>
+                            ),
+                            ul: ({ children }) => (
+                              <ul className="ml-4 mb-2">{children}</ul>
+                            ),
+                            ol: ({ children }) => (
+                              <ol className="ml-4 mb-2">{children}</ol>
+                            ),
+                            li: ({ children }) => (
+                              <li className="mb-1">{children}</li>
+                            ),
+                            h1: ({ children }) => (
+                              <h1 className="text-base font-bold mb-2">
+                                {children}
+                              </h1>
+                            ),
+                            h2: ({ children }) => (
+                              <h2 className="text-sm font-bold mb-2">
+                                {children}
+                              </h2>
+                            ),
+                            h3: ({ children }) => (
+                              <h3 className="text-sm font-semibold mb-1">
+                                {children}
+                              </h3>
+                            ),
+                          }}
+                        >
+                          {message.content}
+                        </ReactMarkdown>
                       )}
                     </div>
                   )}
