@@ -41,31 +41,37 @@ export default function Home() {
   const [selectedText, setSelectedText] = useState('');
   
   useEffect(() => {
-    const handleSelection = () => {
+    const handleSelection = async () => {
       const selection = window.getSelection()?.toString() || '';
       setSelectedText(selection);
       if (selection) {
         console.log('Selected text:', selection);
+        try {
+          await navigator.clipboard.writeText(selection);
+          console.log('Copied to clipboard');
+        } catch (err) {
+          console.log('Failed to copy');
+        }
       }
     };
-
+  
     document.addEventListener('mouseup', handleSelection);
     document.addEventListener('keyup', handleSelection);
-
+  
     return () => {
       document.removeEventListener('mouseup', handleSelection);
       document.removeEventListener('keyup', handleSelection);
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (selectedText) {
-  //     toast("Text Selected", {
-  //       description: selectedText.length > 50 ? `${selectedText.substring(0, 50)}...` : selectedText,
-  //       position: "top-right",
-  //     });
-  //   }
-  //  }, [selectedText]);
+  useEffect(() => {
+    if (selectedText) {
+      toast("Copied Text:", {
+        description: selectedText.length > 50 ? `${selectedText.substring(0, 50)}...` : selectedText,
+        position: "top-right",
+      });
+    }
+   }, [selectedText]);
 
   return (
     <div className="h-screen overflow-hidden">
