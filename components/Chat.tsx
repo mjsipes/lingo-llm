@@ -91,15 +91,15 @@ export function Chat() {
           </TooltipContent>
         </Tooltip>
         <div className="flex-1">
-  <div className="flex items-baseline gap-1">
-    <span className="font-medium text-sm">Pingu Penguin</span>
-    {/* {isLoading && (
-      <span className="text-xs text-muted-foreground">
-        is thinking.
-      </span>
-    )} */}
-  </div>
-</div>
+          <div className="flex items-baseline gap-1">
+            <span className="font-medium text-sm">Pingu Penguin</span>
+            {/* {isLoading && (
+              <span className="text-xs text-muted-foreground">
+                is thinking...
+              </span>
+            )} */}
+          </div>
+        </div>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button variant="ghost" size="icon" onClick={handleNewChat}>
@@ -116,14 +116,8 @@ export function Chat() {
       <div className="flex-1 overflow-hidden w-full">
         <ScrollArea className="h-full w-full px-4 py-2" ref={scrollAreaRef}>
           <div className="space-y-2 w-full">
-            {messages.length === 0 && (
-              <div className="flex justify-start">
-                <div className="rounded-lg px-3 py-2 text-sm shadow-sm bg-muted mr-auto max-w-[80%]">
-                  Hi, how can I help you today?
-                </div>
-              </div>
-            )}
-            {messages.map((message) => (
+
+            {messages.map((message, index) => (
               <div
                 key={message.id}
                 className={`flex ${
@@ -144,11 +138,67 @@ export function Chat() {
                     message.content
                   ) : (
                     <div className="prose prose-sm max-w-none dark:prose-invert">
-                      {message.parts?.map((part, index) => {
-                        if (part.type === "text") {
-                          return (
+                      {!message.content && isLoading && index === messages.length - 1 ? (
+                        <span className="text-muted-foreground animate-pulse">
+                          Thinking...
+                        </span>
+                      ) : (
+                        <>
+                          {message.parts?.map((part, partIndex) => {
+                            if (part.type === "text") {
+                              return (
+                                <ReactMarkdown
+                                  key={partIndex}
+                                  components={{
+                                    p: ({ children }) => (
+                                      <p className="mb-2 last:mb-0">{children}</p>
+                                    ),
+                                    code: ({ children }) => (
+                                      <code className="bg-muted-foreground/20 px-1 py-0.5 rounded text-xs">
+                                        {children}
+                                      </code>
+                                    ),
+                                    pre: ({ children }) => (
+                                      <pre className="bg-muted-foreground/20 p-2 rounded overflow-x-auto text-xs">
+                                        {children}
+                                      </pre>
+                                    ),
+                                    ul: ({ children }) => (
+                                      <ul className="ml-4 mb-2">{children}</ul>
+                                    ),
+                                    ol: ({ children }) => (
+                                      <ol className="ml-4 mb-2">{children}</ol>
+                                    ),
+                                    li: ({ children }) => (
+                                      <li className="mb-1">{children}</li>
+                                    ),
+                                    h1: ({ children }) => (
+                                      <h1 className="text-base font-bold mb-2">
+                                        {children}
+                                      </h1>
+                                    ),
+                                    h2: ({ children }) => (
+                                      <h2 className="text-sm font-bold mb-2">
+                                        {children}
+                                      </h2>
+                                    ),
+                                    h3: ({ children }) => (
+                                      <h3 className="text-sm font-semibold mb-1">
+                                        {children}
+                                      </h3>
+                                    ),
+                                  }}
+                                >
+                                  {part.text}
+                                </ReactMarkdown>
+                              );
+                            }
+                            if (part.type === "reasoning") {
+                              return null;
+                            }
+                            return null;
+                          }) || (
                             <ReactMarkdown
-                              key={index}
                               components={{
                                 p: ({ children }) => (
                                   <p className="mb-2 last:mb-0">{children}</p>
@@ -189,58 +239,10 @@ export function Chat() {
                                 ),
                               }}
                             >
-                              {part.text}
+                              {message.content}
                             </ReactMarkdown>
-                          );
-                        }
-                        if (part.type === "reasoning") {
-                          return null;
-                        }
-                        return null;
-                      }) || (
-                        <ReactMarkdown
-                          components={{
-                            p: ({ children }) => (
-                              <p className="mb-2 last:mb-0">{children}</p>
-                            ),
-                            code: ({ children }) => (
-                              <code className="bg-muted-foreground/20 px-1 py-0.5 rounded text-xs">
-                                {children}
-                              </code>
-                            ),
-                            pre: ({ children }) => (
-                              <pre className="bg-muted-foreground/20 p-2 rounded overflow-x-auto text-xs">
-                                {children}
-                              </pre>
-                            ),
-                            ul: ({ children }) => (
-                              <ul className="ml-4 mb-2">{children}</ul>
-                            ),
-                            ol: ({ children }) => (
-                              <ol className="ml-4 mb-2">{children}</ol>
-                            ),
-                            li: ({ children }) => (
-                              <li className="mb-1">{children}</li>
-                            ),
-                            h1: ({ children }) => (
-                              <h1 className="text-base font-bold mb-2">
-                                {children}
-                              </h1>
-                            ),
-                            h2: ({ children }) => (
-                              <h2 className="text-sm font-bold mb-2">
-                                {children}
-                              </h2>
-                            ),
-                            h3: ({ children }) => (
-                              <h3 className="text-sm font-semibold mb-1">
-                                {children}
-                              </h3>
-                            ),
-                          }}
-                        >
-                          {message.content}
-                        </ReactMarkdown>
+                          )}
+                        </>
                       )}
                     </div>
                   )}
@@ -252,7 +254,7 @@ export function Chat() {
       </div>
 
       {/* Starter Messages */}
-      {messages.length === 0 && (
+      {/* {messages.length === 0 && (
         <div className="flex flex-col gap-2 px-4 pt-2 pb-1 bg-background w-full">
           <div className="flex gap-2 flex-wrap">
             {starterMessages.map((msg, idx) => (
@@ -274,7 +276,7 @@ export function Chat() {
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Input */}
       <div className="px-4 pb-4 pt-2 w-full">
