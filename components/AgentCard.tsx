@@ -15,14 +15,14 @@ const AgentCard = ({
   image,
   welcomeMessage,
   systemPrompt,
-  selectedText,
+  userPrompt,
 }: {
   name: string;
   title: string;
   image: string;
   welcomeMessage: string;
   systemPrompt: string;
-  selectedText: string;
+  userPrompt: string;
 }) => {
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, append } = useChat({
@@ -42,7 +42,7 @@ const AgentCard = ({
     
     setIsOpen(true);
     
-    const messageContent = selectedText || 'hello';
+    const messageContent = userPrompt || 'hello';
     console.log("messageContent", messageContent);
     
     await append({
