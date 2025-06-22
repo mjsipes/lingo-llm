@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { Chat } from "@/components/Chat";
 import AgentCard from "@/components/AgentCard";
+import AgentCardBee from "@/components/AgentCardBee";
 import AgentCardFrog from "@/components/AgentCardFrog";
 import ImageAgent from "@/components/ImageAgent";
 import AgentCardOwl from "@/components/AgentCardOwl";
@@ -353,6 +354,53 @@ export default function Home() {
                   userPrompt="make buzzing noises like a bee"
                   systemPrompt={agentBeeSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
+                  onSpecialAction={async () => {
+                    try {
+                      console.log("Starting PDF generation...");
+
+                      const response = await fetch("/api/export-pdf", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          messages: messages,
+                          images: images,
+                        }),
+                      });
+
+                      if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(
+                          `Failed to generate PDF: ${response.status} - ${errorText}`
+                        );
+                      }
+
+                      // Create download link
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.style.display = "none";
+                      a.href = url;
+                      a.download = "my-spanish-story.pdf";
+                      document.body.appendChild(a);
+                      a.click();
+
+                      // Cleanup
+                      setTimeout(() => {
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                      }, 100);
+
+                      console.log("PDF downloaded successfully!");
+                    } catch (error) {
+                      console.error("Error generating PDF:", error);
+                      alert(
+                        "Sorry! There was an error creating your PDF. Please try again."
+                      );
+                      throw error; // Re-throw so the component can handle loading state
+                    }
+                  }}
                 />
               </div>
             </div>
