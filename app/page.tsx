@@ -47,15 +47,29 @@ export default function Home() {
   const [selectedText, setSelectedText] = useState("");
   const [textareaContent, setTextareaContent] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 });
 
   // use effects
   useEffect(() => {
     const handleMouseUp = () => {
       // Small delay to let the selection settle
       setTimeout(() => {
-        const selection = window.getSelection()?.toString();
-        if (selection && selection.length > 0) {
-          console.log("Selection detected:", selection);
+        const selection = window.getSelection();
+        const selectionText = selection?.toString();
+        
+        if (selectionText && selectionText.length > 0) {
+          console.log("Selection detected:", selectionText);
+          
+          // Get the selection coordinates
+          const range = selection.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+          
+          // Position the trigger at the bottom-right of selection, offset down and right
+          setTriggerPosition({
+            x: rect.right + 10, // 10px to the right of right edge
+            y: rect.bottom + 5 // 5px below the bottom edge
+          });
+          
           setIsPopoverOpen(true);
         } else {
           console.log("No selection, hiding popover");
@@ -79,6 +93,9 @@ export default function Home() {
         await navigator.clipboard.writeText(selection);
         setSelectedText(selection);
         setIsPopoverOpen(false);
+        
+        // Clear the text selection
+        window.getSelection()?.removeAllRanges();
         
         toast("Copied Text:", {
           description:
@@ -106,8 +123,14 @@ export default function Home() {
     <div className="h-screen overflow-hidden">
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger asChild>
-          {/* Position trigger in the header so popover appears there */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1 h-1" />
+          {/* Position trigger at the selection coordinates */}
+          <div 
+            className="absolute w-1 h-1 pointer-events-none"
+            style={{
+              left: `${triggerPosition.x}px`,
+              top: `${triggerPosition.y}px`,
+            }}
+          />
         </PopoverTrigger>
         <PopoverContent className="w-auto p-2">
           <Button
@@ -216,6 +239,7 @@ export default function Home() {
                   welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
                   userPrompt={selectedText || "hello"}
                   systemPrompt="respond in earth noises"
+                  isPopoverOpen={isPopoverOpen}
                 />
                 <AgentCard
                   name="AI Bees"
@@ -224,6 +248,7 @@ export default function Home() {
                   welcomeMessage="We will help send your book out to the world!"
                   userPrompt="make buzzing noises like a bee"
                   systemPrompt="make buzzing noises like a bee"
+                  isPopoverOpen={isPopoverOpen}
                 />
               </div>
             </div>

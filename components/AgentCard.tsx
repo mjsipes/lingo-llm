@@ -16,6 +16,7 @@ const AgentCard = ({
   welcomeMessage,
   systemPrompt,
   userPrompt,
+  isPopoverOpen
 }: {
   name: string;
   title: string;
@@ -23,6 +24,7 @@ const AgentCard = ({
   welcomeMessage: string;
   systemPrompt: string;
   userPrompt: string;
+  isPopoverOpen?: boolean;
 }) => {
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, append } = useChat({
@@ -47,9 +49,13 @@ const AgentCard = ({
     });
   };
 
-  const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
-  };
+const handleOpenChange = (open: boolean) => {
+  // Don't close tooltip if copy popover is open
+  if (!open && isPopoverOpen) {
+    return; // Keep tooltip open
+  }
+  setIsOpen(open);
+};
 
   return (
     <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
