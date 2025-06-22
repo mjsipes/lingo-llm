@@ -7,13 +7,7 @@ right now i need to add debug infor for agentcardfox.
 
 
 
-add streaming or caching to the owl
-giving context to the lion.
-
-ribbit and beez need to work
+add caching to the owl
+beez need to work
 getting context for each image.
-loading state for image + make bigger + delete
-
-
-adding randome word inspirator.
-
+global layout

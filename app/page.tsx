@@ -7,7 +7,11 @@ import AgentCardFrog from "@/components/AgentCardFrog";
 import ImageAgent from "@/components/ImageAgent";
 import AgentCardOwl from "@/components/AgentCardOwl";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -35,7 +39,7 @@ export default function Home() {
     "/bees.png",
   ]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  
+
   const {
     messages,
     input,
@@ -113,7 +117,10 @@ export default function Home() {
       const data = await response.json();
       const subjectResult = data.content || "";
       console.log(
-        `   setting immediateSubject to groq result: ${subjectResult.slice(0, 100)}...`
+        `   setting immediateSubject to groq result: ${subjectResult.slice(
+          0,
+          100
+        )}...`
       );
       setImmediateSubject(subjectResult);
     } catch (error) {
@@ -169,11 +176,21 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen overflow-hidden">
-      <SelectionPopover {...selectionProps} />
-      <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
-        <ResizablePanel defaultSize={36} minSize={25} maxSize={50}>
-          <div className="h-screen overflow-hidden">
+  <div className="h-screen overflow-hidden flex flex-col">
+    <SelectionPopover {...selectionProps} />
+    
+    {/* Header - fixed height */}
+    <div className="py-[10px] border-b flex-shrink-0">
+      <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
+        lingo llm
+      </h1>
+    </div>
+    
+    {/* Resizable area - takes remaining height */}
+    <div className="flex-1 min-h-0">
+      <ResizablePanelGroup direction="horizontal" className="h-full w-full">
+        <ResizablePanel defaultSize={50} minSize={40} maxSize={60}>
+          <div className="h-full overflow-hidden">
             <Chat
               messages={messages}
               input={input}
@@ -186,45 +203,37 @@ export default function Home() {
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={66} className="h-full">
+        <ResizablePanel defaultSize={50} className="h-full">
           <div className="flex flex-col h-full">
-            <div className="py-[10px] border-b flex-shrink-0">
-              <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
-                lingo llm
-              </h1>
-            </div>
-            <div className="grid grid-rows-8 p-4 gap-2 flex-1 min-h-0 bg-gray-200">
+            <div className="grid grid-rows-8 flex-1 min-h-0 bg-gray-200">
               <div className="row-span-1 bg-red-200 flex-row gap-10 flex items-center justify-center">
-                  <ImageAgent
-                    name="Palette the Camel"
-                    title="Creative Painter"
-                    image="/camel.png"
-                    welcomeMessage="Hi! I'm really good at making awesome pictures for your stories!"
-                    userPrompt={imageAgentUserPrompt || camelSelfPortraitPrompt}
-                    systemPrompt={agentPandaSystemPrompt}
-                    onImageGenerated={handleImageGenerated}
-                    image_model="dall-e-3"
-                  />
-                  <ImageAgent
-                    name="Panda the Painter"
-                    title="Creative Painter"
-                    image="/panda.png"
-                    welcomeMessage="Hi! I'm learning to paint and I love making cute, fun pictures that might be a little silly!"
-                    userPrompt={imageAgentUserPrompt || pandaSelfPortraitPrompt}
-                    systemPrompt={agentPandaSystemPrompt}
-                    onImageGenerated={handleImageGenerated}
-                    image_model="dall-e-2"
-                  />
+                <ImageAgent
+                  name="Palette the Camel"
+                  title="Creative Painter"
+                  image="/camel.png"
+                  welcomeMessage="Hi! I'm really good at making awesome pictures for your stories!"
+                  userPrompt={imageAgentUserPrompt || camelSelfPortraitPrompt}
+                  systemPrompt={agentPandaSystemPrompt}
+                  onImageGenerated={handleImageGenerated}
+                  image_model="dall-e-3"
+                />
+                <ImageAgent
+                  name="Panda the Painter"
+                  title="Creative Painter"
+                  image="/panda.png"
+                  welcomeMessage="Hi! I'm learning to paint and I love making cute, fun pictures that might be a little silly!"
+                  userPrompt={imageAgentUserPrompt || pandaSelfPortraitPrompt}
+                  systemPrompt={agentPandaSystemPrompt}
+                  onImageGenerated={handleImageGenerated}
+                  image_model="dall-e-2"
+                />
               </div>
               <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
                 <div className="bg-blue-500 min-h-0 col-span-2">
                   <ScrollArea className="h-full">
                     <div className="p-4 grid grid-cols-4 gap-2">
                       {images.map((image, index) => (
-                        <div 
-                          key={`${image}-${index}`} 
-                          className="w-full"
-                        >
+                        <div key={`${image}-${index}`} className="w-full">
                           <Popover>
                             <PopoverTrigger asChild>
                               <div className="cursor-pointer relative rounded-lg overflow-hidden">
@@ -237,8 +246,11 @@ export default function Home() {
                                 />
                               </div>
                             </PopoverTrigger>
-                            
-                            <PopoverContent className="w-auto p-0 border-0" side="right">
+
+                            <PopoverContent
+                              className="w-auto p-0 border-0"
+                              side="right"
+                            >
                               <div className="relative">
                                 <Image
                                   src={image}
@@ -299,5 +311,6 @@ export default function Home() {
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
-  );
+  </div>
+);
 }
