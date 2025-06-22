@@ -42,27 +42,9 @@ export default function Home() {
 
   const selectionProps = useTextSelection();
   const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState<string>();
-  const [agentLionUserPrompt, setAgentLionUserPrompt] = useState<string>();
   const [backgroundContext, setBackgroundContext] = useState<string>("");
   const [immediateSubject, setImmediateSubject] = useState<string>("");
 
-  // useEffect for agentLionUserPrompt (existing) - only when streaming completes
-  useEffect(() => {
-    console.log("isLoading useEffect called:", isLoading);
-    if (isLoading) {
-      console.log("isLoading - still loading, skip");
-      return;
-    }
-    if (messages.length === 0) {
-      return;
-    }
-    const last3Messages = messages.slice(-3);
-    const formattedMessages = last3Messages
-      .map((msg) => `${msg.role}: ${msg.content}`)
-      .join("\n");
-    console.log(`agentLionUserPrompt set to: ${formattedMessages.slice(0, 20)}...`);
-    setAgentLionUserPrompt(formattedMessages);
-  }, [isLoading]);
 
   // useEffect for backgroundContext - analyzes messages for story context (only when streaming completes)
   useEffect(() => {
@@ -90,13 +72,13 @@ export default function Home() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            systemPrompt: "You are an expert at analyzing story content and creating background context descriptions for image generation. Based on the conversation history, create a concise background context description suitable for an AI image generation model.",
-            userPrompt: `Analyze the following conversation and create an appropriate background context description for image generation that captures the story's setting, mood, and atmosphere:\n\n${formattedMessages}`,
+            systemPrompt: "You summarize stories with great detail and imagery. Take the following story imput and output a brief 3-4 sentance background of the story at hand. Capture the stories setting, mood and atmosphere. Specifically output only the summary.",
+            userPrompt: formattedMessages,
           }),
         });
         const data = await response.json();
         const contextResult = data.content || "";
-        console.log(`backgroundContext set to: ${contextResult.slice(0, 20)}...`);
+        console.log(`backgroundContext set to: ${contextResult}...`);
         setBackgroundContext(contextResult);
       } catch (error) {
         console.error('Error analyzing background context:', error);
@@ -104,7 +86,6 @@ export default function Home() {
         setBackgroundContext("");
       }
     };
-
     analyzeBackgroundContext();
   }, [isLoading]); // Only trigger when message count changes (new messages added)
 
@@ -259,7 +240,7 @@ export default function Home() {
                   title="Constructive Critic"
                   image="/lion2.png"
                   welcomeMessage="Hello! I specialize in providing thoughtful feedback and constructive criticism on your story."
-                  userPrompt={agentLionUserPrompt || "hello"}
+                  userPrompt={backgroundContext || "hello"}
                   systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
                 />
