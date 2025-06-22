@@ -9,9 +9,10 @@ right now i need to add debug infor for agentcardfox.
 
 add streaming or caching to the owl
 getting context for each image.
-giving context to the lion
-fixing clipboard
+giving context to the lion.
 loading state for image
-
 add image input
+adding randome word inspirator.
+
+immediate next step = context to ai lion.
 

@@ -2,16 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
 import { Chat } from "@/components/Chat";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import {
   Popover,
   PopoverContent,
@@ -22,7 +14,6 @@ import AgentCard from "@/components/AgentCard";
 import AgentCardFrog from "@/components/AgentCardFrog";
 import AgentCardPanda from "@/components/AgentCardPanda";
 import AgentCardOwl from "@/components/AgentCardOwl";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
 import {
@@ -32,6 +23,7 @@ import {
 } from "@/components/ui/resizable";
 import { toast } from "sonner";
 import { Copy } from "lucide-react";
+import {agentPandaSystemPrompt, agentBeeSystemPrompt, agentLionSystemPrompt, agentOwlSystemPrompt, agentFrogSystemPrompt} from "@/components/clientSystemPrompts";
 
 export default function Home() {
   // application state
@@ -186,7 +178,7 @@ export default function Home() {
                     image="/frog.png"
                     welcomeMessage="I will help you build your story! Highlight the snippet of text you want me to add, then I will add it to your story."
                     userPrompt={selectedText || "hello"}
-                    systemPrompt="You are a creative writing assistant. Your response will be directly added to a story in a text box. Please only output the info from the user prompt."
+                    systemPrompt={agentFrogSystemPrompt}
                     onResponse={handleStoryBuilderResponse}
                     isPopoverOpen={isPopoverOpen}
                   />
@@ -199,7 +191,7 @@ export default function Home() {
                     image="/panda.png"
                     welcomeMessage="I will help you create an image!"
                     userPrompt={selectedText || "a cute panda painting"}
-                    systemPrompt={agentPandaCardSystemPrompt}
+                    systemPrompt={agentPandaSystemPrompt}
                     onImageGenerated={handleImageGenerated}
                   />
                 </div>
@@ -237,7 +229,7 @@ export default function Home() {
                   image="/owl2.png"
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
                   userPrompt={selectedText || "Hello"}
-                  systemPrompt="Pronounce the users text in a way for a child to understand. For example: hello = huh-LOH. Only respond with the pronunciation. Do not include any other text."
+                  systemPrompt={agentOwlSystemPrompt}
                   isPopoverOpen={isPopoverOpen}
                 />
                 <AgentCard
@@ -246,7 +238,7 @@ export default function Home() {
                   image="/lion2.png"
                   welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
                   userPrompt={selectedText || "hello"}
-                  systemPrompt="respond in earth noises"
+                  systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={isPopoverOpen}
                 />
                 <AgentCard
@@ -255,7 +247,7 @@ export default function Home() {
                   image="/bees.png"
                   welcomeMessage="We will help send your book out to the world!"
                   userPrompt="make buzzing noises like a bee"
-                  systemPrompt="make buzzing noises like a bee"
+                  systemPrompt={agentBeeSystemPrompt}
                   isPopoverOpen={isPopoverOpen}
                 />
               </div>
@@ -266,28 +258,3 @@ export default function Home() {
     </div>
   );
 }
-
-const agentPandaCardSystemPrompt = `You are a creative image generation assistant.
-
-All characters are illustrated in a cinematic cartoon style that feels cohesive, expressive, and friendly — ideal for a learning platform for children. The visual tone is inspired by the charm of modern animated films with a soft, polished look that appeals to both kids and adults.
-
-Core Style Attributes:
-- Clean line art with polished outlines
-- Vector-style cartoon illustration
-- Soft, rounded shapes for all body features
-- Large, expressive eyes that convey warmth and personality
-- Gentle blush on cheeks for approachability
-- Warm, soft lighting that casts subtle, cozy shadows under characters
-- White background only, subtly textured with minimal gradients or abstract ambient shapes (like clouds, blobs, or sparkles), keeping the focus on the character
-- Navy blue business suits with white shirts and black ties (unless the role calls for a specific variation, like rolled-up sleeves or art splatters)
-- Each character includes a prop or pose that reinforces their role, such as:
-  - Microphones for translators
-  - Paintbrushes for artists
-  - Notebooks for critics
-  - Floating ideas for dreamers
-  - Multiple objects being juggled by multitaskers
-
-Overall Vibe:
-- Professional but playful – they look like a kid-friendly startup crew
-- Cohesive and stylized, as if they all come from the same cinematic universe
-- Designed to be immediately readable, engaging, and emotionally expressive for children in an educational setting`;
