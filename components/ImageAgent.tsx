@@ -38,7 +38,7 @@ const ImageAgent = ({
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(`Generating image with prompt: ${userPrompt.slice(0, 150)}`);
+    console.log(`Generating image with prompt: ${userPrompt}`);
     if (isLoading) return;
 
     setIsOpen(true);

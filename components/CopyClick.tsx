@@ -35,7 +35,8 @@ export function useTextSelection() {
             x: rect.left + rect.width / 2,
             y: upperHalf ? rect.bottom + 5 : rect.top - 5,
           });
-          setSelectedText(selectionText);
+          // Remove this line:
+          // setSelectedText(selectionText);
           setIsPopoverOpen(true);
         } else {
           setIsPopoverOpen(false);
@@ -55,7 +56,7 @@ export function useTextSelection() {
     if (selection) {
       try {
         await navigator.clipboard.writeText(selection);
-        console.log("setting selected text to ", selection);
+        console.log("setting selected text to ", selection.slice(0, 60));
         setSelectedText(selection);
         setIsPopoverOpen(false);
 

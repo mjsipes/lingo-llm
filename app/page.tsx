@@ -22,7 +22,7 @@ import {
   agentFrogSystemPrompt,
   camelSelfPortraitPrompt,
   pandaSelfPortraitPrompt,
-  styleGuidelines
+  styleGuidelines,
 } from "@/components/clientSystemPrompts";
 
 export default function Home() {
@@ -45,6 +45,33 @@ export default function Home() {
   const [backgroundContext, setBackgroundContext] = useState<string>("");
   const [immediateSubject, setImmediateSubject] = useState<string>("");
 
+  // Only trigger when streaming completes
+  const analyzeBackgroundContext = async () => {
+    try {
+      const formattedMessages = messages
+        .map((msg) => `${msg.role}: ${msg.content}`)
+        .join("\n");
+      const response = await fetch("/api/groq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          systemPrompt:
+            "You summarize stories with great detail and imagery. Take the following story imput and output a brief 3-4 sentance background of the story at hand. Capture the stories setting, mood and atmosphere. Specifically output only the summary.",
+          userPrompt: formattedMessages,
+        }),
+      });
+      const data = await response.json();
+      const contextResult = data.content || "";
+      console.log(`backgroundContext set to: ${contextResult}...`);
+      setBackgroundContext(contextResult);
+    } catch (error) {
+      console.error("Error analyzing background context:", error);
+      console.log("backgroundContext set to: (error - empty)");
+      setBackgroundContext("");
+    }
+  };
 
   // useEffect for backgroundContext - analyzes messages for story context (only when streaming completes)
   useEffect(() => {
@@ -58,89 +85,76 @@ export default function Home() {
       setBackgroundContext("");
       return;
     }
-
-    // Only trigger when streaming completes
-    const analyzeBackgroundContext = async () => {
-      try {
-        const formattedMessages = messages
-          .map((msg) => `${msg.role}: ${msg.content}`)
-          .join("\n");
-
-        const response = await fetch('/api/groq', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            systemPrompt: "You summarize stories with great detail and imagery. Take the following story imput and output a brief 3-4 sentance background of the story at hand. Capture the stories setting, mood and atmosphere. Specifically output only the summary.",
-            userPrompt: formattedMessages,
-          }),
-        });
-        const data = await response.json();
-        const contextResult = data.content || "";
-        console.log(`backgroundContext set to: ${contextResult}...`);
-        setBackgroundContext(contextResult);
-      } catch (error) {
-        console.error('Error analyzing background context:', error);
-        console.log("backgroundContext set to: (error - empty)");
-        setBackgroundContext("");
-      }
-    };
     analyzeBackgroundContext();
   }, [isLoading]); // Only trigger when message count changes (new messages added)
+
+  const analyzeImmediateSubject = async () => {
+    console.log(
+      "analyzeImmediateSubject. sending following selectionProps.selectedText to groq for analysis: ",
+      selectionProps.selectedText.slice(0, 100)
+    );
+    try {
+      const response = await fetch("/api/groq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          systemPrompt:
+            "You are an expert at analyzing text content and creating immediate subject descriptions for image generation. Based on the selected text, create a concise description of what should be the main subject/focus of an image.",
+          userPrompt: `Analyze the following selected text and create an appropriate immediate subject description for image generation that captures the main focus, characters, or objects that should be prominently featured in the image:\n\n${selectionProps.selectedText}`,
+        }),
+      });
+      const data = await response.json();
+      const subjectResult = data.content || "";
+      console.log(
+        `   setting immediateSubject to groq result: ${subjectResult.slice(0, 100)}...`
+      );
+      setImmediateSubject(subjectResult);
+    } catch (error) {
+      console.error("Error analyzing immediate subject:", error);
+      console.log("immediateSubject set to: (error - empty)");
+      setImmediateSubject("");
+    }
+  };
 
   // useEffect for immediateSubject - analyzes selectedText (only when not empty/null)
   useEffect(() => {
     console.log("selectionProps.selectedText useEffect called");
-    if (!selectionProps.selectedText || selectionProps.selectedText.trim() === "") {
+    if (
+      !selectionProps.selectedText ||
+      selectionProps.selectedText.trim() === ""
+    ) {
       console.log("immediateSubject set to: (empty)");
       setImmediateSubject("");
       return;
     }
-
-    const analyzeImmediateSubject = async () => {
-            console.log("analyzeImmediateSubject. sending selectionProps.selectedText to groq for analysis");
-            console.log("   selectionProps.selectedText: " ,selectionProps.selectedText.slice(0, 100));
-
-      try {
-        const response = await fetch('/api/groq', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            systemPrompt: "You are an expert at analyzing text content and creating immediate subject descriptions for image generation. Based on the selected text, create a concise description of what should be the main subject/focus of an image.",
-            userPrompt: `Analyze the following selected text and create an appropriate immediate subject description for image generation that captures the main focus, characters, or objects that should be prominently featured in the image:\n\n${selectionProps.selectedText}`,
-          }),
-        });
-        const data = await response.json();
-        const subjectResult = data.content || "";
-                console.log("   groq subject result: " , subjectResult.slice(0, 100));
-        console.log(`   immediateSubject set to: ${subjectResult.slice(0, 100)}...`);
-        setImmediateSubject(subjectResult);
-      } catch (error) {
-        console.error('Error analyzing immediate subject:', error);
-        console.log("immediateSubject set to: (error - empty)");
-        setImmediateSubject("");
-      }
-    };
-
     analyzeImmediateSubject();
   }, [selectionProps.selectedText]);
 
   // useEffect to combine backgroundContext and immediateSubject into imageAgentUserPrompt
   useEffect(() => {
-    console.log("imageAgentUserPrompt useEffect called");
+    console.log("backgroundContext immediateSubject useEffect called");
     if (backgroundContext || immediateSubject) {
-      const prompt = `Generate an image with the following background context: ${backgroundContext}. The immediate subject of the image should be: ${immediateSubject}. Please adhere to following styleguide: ${styleGuidelines}`;
-      console.log(`   imageAgentUserPrompt set w ${prompt.length} characters: ${prompt.slice(0, 100)}...`);
+      let prompt = "Generate an image";
+      if (backgroundContext) {
+        prompt += ` with the following background context: ${backgroundContext}`;
+      }
+      if (immediateSubject) {
+        prompt += `. The immediate subject of the image should be: ${immediateSubject}`;
+      }
+      prompt += `. Please adhere to following styleguide: ${styleGuidelines}`;
+      console.log(
+        `   imageAgentUserPrompt set w ${
+          prompt.length
+        } characters: ${prompt.slice(0, 100)}...`
+      );
       setImageAgentUserPrompt(prompt);
     } else {
       console.log("   imageAgentUserPrompt set to: undefined");
       setImageAgentUserPrompt(undefined);
     }
   }, [backgroundContext, immediateSubject]);
-
   const handleImageGenerated = (imageUrl: string) => {
     setImages((prev) => [...prev, imageUrl]);
   };
