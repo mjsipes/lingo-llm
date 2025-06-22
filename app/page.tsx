@@ -176,37 +176,37 @@ export default function Home() {
   };
 
   return (
-  <div className="h-screen overflow-hidden flex flex-col">
-    <SelectionPopover {...selectionProps} />
-    
-    {/* Header - fixed height */}
-    <div className="py-[10px] border-b flex-shrink-0">
-      <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
-        lingo llm
-      </h1>
-    </div>
-    
-    {/* Resizable area - takes remaining height */}
-    <div className="flex-1 min-h-0">
-      <ResizablePanelGroup direction="horizontal" className="h-full w-full">
-        <ResizablePanel defaultSize={50} minSize={40} maxSize={50}>
-          <div className="h-full overflow-hidden">
-            <Chat
-              messages={messages}
-              input={input}
-              handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              isLoading={isLoading}
-              setMessages={setMessages}
-              selectedText={selectionProps.selectedText}
-            />
-          </div>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={50} className="h-full">
-          <div className="flex flex-col h-full">
-            <div className="grid grid-rows-8 flex-1 min-h-0 ">
-              <div className="row-span-1 flex-row gap-10 flex items-center justify-center">
+    <div className="h-screen overflow-hidden flex flex-col">
+      <SelectionPopover {...selectionProps} />
+
+      {/* Header - fixed height */}
+      <div className="py-[10px] border-b flex-shrink-0">
+        <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
+          lingo llm
+        </h1>
+      </div>
+
+      {/* Resizable area - takes remaining height */}
+      <div className="flex-1 min-h-0">
+        <ResizablePanelGroup direction="horizontal" className="h-full w-full">
+          <ResizablePanel defaultSize={50} minSize={40} maxSize={58}>
+            <div className="h-full overflow-hidden">
+              <Chat
+                messages={messages}
+                input={input}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+                setMessages={setMessages}
+                selectedText={selectionProps.selectedText}
+              />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={50} className="h-full">
+            <div className="flex flex-col h-full">
+              {/* Image Agents Row */}
+              <div className="flex-shrink-0 flex flex-row gap-4 items-center justify-center p-4">
                 <ImageAgent
                   name="Palette the Camel"
                   title="Creative Painter"
@@ -228,47 +228,53 @@ export default function Home() {
                   image_model="dall-e-2"
                 />
               </div>
-              <div className="row-span-6 grid grid-cols-2 min-h-0 p-4">
-                <div className="bg-blue-500 min-h-0 col-span-2">
-                  <ScrollArea className="h-full">
-                    <div className="p-4 grid grid-cols-4 gap-2">
-                      {images.map((image, index) => (
-                        <div key={`${image}-${index}`} className="w-full">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <div className="cursor-pointer relative rounded-lg overflow-hidden">
-                                <Image
-                                  src={image}
-                                  alt="Generated artwork"
-                                  width={150}
-                                  height={150}
-                                  className="w-full h-auto"
-                                />
-                              </div>
-                            </PopoverTrigger>
 
-                            <PopoverContent
-                              className="w-auto p-0 border-0"
-                              side="right"
-                            >
-                              <div className="relative">
-                                <Image
-                                  src={image}
-                                  alt="Generated artwork - enlarged"
-                                  width={480}
-                                  height={480}
-                                  className="rounded-lg"
-                                />
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                        </div>
-                      ))}
+              {/* Image Gallery - takes most space */}
+              <div className="flex-1 min-h-0 p-4">
+                <div className="bg-blue-500 h-full rounded-lg">
+                  <ScrollArea className="h-full">
+                    <div className="p-4">
+                      <div className="grid grid-cols-4 gap-2">
+                        {images.map((image, index) => (
+                          <div key={`${image}-${index}`} className="w-full">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <div className="cursor-pointer relative rounded-lg overflow-hidden">
+                                  <Image
+                                    src={image}
+                                    alt="Generated artwork"
+                                    width={150}
+                                    height={150}
+                                    className="w-full h-auto"
+                                  />
+                                </div>
+                              </PopoverTrigger>
+
+                              <PopoverContent
+                                className="w-auto p-0 border-0"
+                                side="right"
+                              >
+                                <div className="relative">
+                                  <Image
+                                    src={image}
+                                    alt="Generated artwork - enlarged"
+                                    width={480}
+                                    height={480}
+                                    className="rounded-lg"
+                                  />
+                                </div>
+                              </PopoverContent>
+                            </Popover>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </ScrollArea>
                 </div>
               </div>
-              <div className="row-span-1 flex flex-row gap-10 items-center justify-center">
+
+              {/* Supporting Characters Row */}
+              <div className="flex-shrink-0 flex flex-row gap-4 items-center justify-center p-4">
                 <AgentCardOwl
                   name="OW-el "
                   title="Pronunciation Coach"
@@ -307,10 +313,9 @@ export default function Home() {
                 />
               </div>
             </div>
-          </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
     </div>
-  </div>
-);
+  );
 }
