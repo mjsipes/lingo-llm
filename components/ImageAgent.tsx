@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ImageAgent = ({
   name,
@@ -85,13 +86,25 @@ const ImageAgent = ({
   return (
     <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
       <TooltipTrigger asChild>
-        <Button className="py-8" onClick={handleClick} disabled={isLoading}>
-          <Avatar className="h-12 w-12">
-            <AvatarImage src={image} />
-            <AvatarFallback>AI</AvatarFallback>
-          </Avatar>
-          <h1>{name}</h1>
-        </Button>
+        <div className="relative">
+          <Button 
+            className="py-8" 
+            onClick={handleClick} 
+            disabled={isLoading}
+          >
+            <Avatar className="h-12 w-12">
+              <AvatarImage src={image} />
+              <AvatarFallback>AI</AvatarFallback>
+            </Avatar>
+            <h1>{name}</h1>
+          </Button>
+          {isLoading && (
+            <Skeleton
+  className="absolute inset-0 rounded-md"
+  style={{ opacity: 0.015 }}
+/>
+          )}
+        </div>
       </TooltipTrigger>
       <TooltipContent className="flex flex-row gap-4">
         <img
@@ -99,13 +112,6 @@ const ImageAgent = ({
           alt={`${name} avatar`}
           className="h-48 w-48 rounded-md"
         />
-        {/* <div className="gap-2">
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-white">
-            {name}
-          </h4>
-          <span className="text-sm font-medium text-white">{title}</span>
-          
-        </div> */}
       </TooltipContent>
     </Tooltip>
   );
