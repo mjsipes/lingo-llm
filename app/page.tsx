@@ -280,7 +280,7 @@ export default function Home() {
                   title="Creative Writing Assistant"
                   image="/frog.png"
                   welcomeMessage="I love to give ideas about what fun things could happen next in your story!"
-                  userPrompt={selectionProps.selectedText || "hello"}
+                  userPrompt={backgroundContext || "hello"}
                   systemPrompt={agentFrogSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
                 />
