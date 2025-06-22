@@ -275,7 +275,7 @@ export default function Home() {
                   systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
                 />
-                <AgentCardFrog
+                <AgentCard
                   name="Ribbit"
                   title="Creative Writing Assistant"
                   image="/frog.png"
