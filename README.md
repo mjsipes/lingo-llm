@@ -1,88 +1,61 @@
-UC Berkeley's AI Hackathon is back! Cal Hacks will be bringing you two days of hacking on the best AI technology the world has to offer. With support from Anthropic, Google, Fetch AI, and more, this will be a monumental event no future AI/LLM developer can afford to miss. You'll even have chance to pitch your project to investors, and win cash prizes! This event is your chance to explore the potential of large language models and other open source APIs, all while making a lasting impact in the world of artificial intelligence.
+# lingo llm 🐧
 
-Geist, "Geist Fallback
-rose oklch(58.6% 0.253 17.585)
-sky oklch(95.1% 0.026 236.824)
-white oklch(98.5% 0 0)
+Lingo LLM is a language learning website where users can engage with little anthropomorphic characters to learn Spanish through AI-powered storytelling.
 
+## TLDR
+I started learning Spanish this summer, downloaded Duolingo, but it felt like Khan Academy. When I asked Claude to translate a news article into Spanish, our conversation evolved into creating fictional Spanish-English stories. I wanted to expand on Claude's capabilities by adding image generation and creating an experience designed for children with a universe of helpful animal characters.
 
+## What it does
 
+Lingo LLM introduces kids to AI orchestration through language learning. Instead of one monolithic AI, children interact with specialized anthropomorphic characters, each with unique abilities. This teaches them how to coordinate different AI agents while making Spanish learning feel like playing with friends.
 
+The core experience revolves around **Pingu**, the main storyteller who controls the chat interface. Children can summon specialized helpers:
+- **Palette the Camel** and **Panda the Painter** turn conversations into illustrated stories
+- Single-purpose agents provide feedback, inspiration, randomness, and translation
+- Each character responds instantly in dialogue format through tooltips
 
+## Why this matters
 
+We might be heading toward a future where children learn from AI or orchestrate AI agents. While we call this "prompt engineering," how do we make it intuitive for kids? Lingo LLM explores this by hiding the complexity of tool calling and agent coordination behind the simple concept: "these are your friends, and they can help you with specific tasks."
 
+The app addresses a fundamental question about AI's future: Will we have one super-intelligent agent, or will the most powerful entity be the dynamic duo of human + coordinated AI? This project was my exploration into what our experience with orchestrating and learning from AI agents might look like in the future.
 
+## How it works
 
-the goal of this app is to be a way for kids to interact and learn with ai. we might one day end up living in a world were kids learn from ai, or kdis are orchestrating ai, and we all are practising that calling it prompt engineering, but what is a good way for kids to think about it? so the list of chat helper buttons and prompting box are two rows . the top row has a list for 4-5 different agents. they will be implements as buttons with an avatar inside it and a little description for each, just enough for their name. it will be like artist, enthusiast, judge, idea generator, and so when you click on them it sends whatever message was in the prompt box to that agent, and they responde into a shadcn tooltip so it kind of looks like dialogue. so like if i want the randome word generator i can just tap him spam and even though there is nothing in the prompt box it just wont send anything to the model. but it does send a request to that function each time so the tooltip will just keep changing with the different responses the avatar spits out. 
+Children can interact with characters in two ways:
+1. **Main conversation** with Pingu for natural language learning
+2. **Quick agent calls** using specialized helper buttons - even spam-clicking generates different responses for instant feedback
 
-how will kids learn to interact with and orchestrate agents, that is if we end up in a world with the agent verse, or will we just have one agent that is super good at everything? its lkind of like in ai we are goin through the history of religion . is there one god or many gods? 
+The Spanish learning happens through collaborative storytelling, where AI agents help create multilingual narratives that make language acquisition feel like creative play rather than studying.
 
-there is no way to tell what the future will be like with ai and humans.
-right now  we can learn from llms and orchestrate them.
-this time may pass. we may live in a future where ai is more powerful alone than in partnership with us.
-but we may also live for al ong time in a world where the most powerful is the dynamic duo of human and ai, and then our job is to orchestrate ai.
-ai might just take over the world and there be nothing we can do to make the world more productive.
-but the future could also be more so heading in the direction of orchestration. maybe we hit a physical limit soon where the ai;s just cant have a lot of context for a long time and the most powerful entinty is the dynamic duo of human and ai. If thats the
-so if thats the future we live in, how do we teach kids to learn from llms, orchestrate these llms, and what does this experience look like? 
+![lingo llm](./lingollm.png)
 
-i focused on the specif usecase of writing multi lingual stories with ai to help learn a language
+## Characters
 
-this was my exploration into what this experience may looks like. The child as they are learning can call to these different anthromorphic characters, each serving their own purpose. In the real world these can be separate ai agents that perform different tasks or the different tools that one agent can perform.
-I wanted to make it intuitive for children, something they could digest and get the hang of. 
-
-they have atthere is the main ai agent they talk with llm lione. he is like the main thread and controls the chat interface. but then there are two special agent that help turn the conversation into a story. there is wrigley the writer and dingo dalle. they have special ablities, they can generate images and add the content from the chat into the story. then there is a group of single purpose agents with specific usecases, they can give feedback, inspiration, seeds of randomness, and translation. The goal with these agents is to be fast, and respond as if its dialogue. 
-
-i hid the complexity of tools calling and agent verse behind the idea that, these are your friends, and they can help you with a specific task.
-
-
-
-
-
-
-
-
-### 🐧 **Pingu** – *Main Character / Learner Avatar*
-
+### 🐧 **Pingu** – *Main Storyteller*
 A classic, adorable cartoon penguin with a navy-blue blazer and big, curious eyes. Pingu is the explorer of the group — asking questions, trying new things, and learning alongside the child.
 
----
+### 🐼 **Panda the Painter** – *Creative Artist*
+A cheerful, wide-eyed panda covered in colorful paint splatters, wearing a slightly oversized navy blazer and red sneakers. Panda the Painter is a beginner artist who's learning to express creativity, holding a paintbrush in one paw and a palette in the other. Always enthusiastic, even when the paint goes outside the lines.
 
-### 🐸 **Ribbit the Writer** – *Story Writer*
+### 🐫 **Palette the Camel** – *Creative Artist*
+A tall, calm, and confident camel with a painter's smock and a neat navy blazer. Palette the Camel brings years of experience and precision to every canvas. Known for clean strokes, beautiful compositions, and a patient, mentoring energy — the creative foil to Panda's messy enthusiasm.
 
-A quirky green frog with oversized round glasses, a navy-blue suit jacket over a green shirt, and an eager expression. Ribbit loves crafting stories and writing plot twists, always ready with a keyboard or typewriter.
+### 🦉 **Owl the Translator** – *Pronunciation Coach*
+A wise owl with soft feathers, round glasses, and a gentle expression. Owl the Translator wears a clean navy suit and carries a small microphone, helping learners understand, pronounce, and translate language clearly and calmly.
 
----
+### 🦁 **Lion the Critic** – *Constructive Critic*
+A strong, poised lion wearing a sharp navy suit and black tie, with small sunglasses perched on his mane. Lion the Critic offers honest, thoughtful feedback to improve your ideas. He's not mean — just focused on making every story the best it can be.
 
-### 🐼 **Panda the Painter** – *Visual Artist*
+### 🐸 **Ribbit the Writer** – *Creative Writing Assistant*
+A quirky green frog with oversized glasses, a blazer, and an endless imagination. Ribbit doesn't write the story for you — he's here to spark ideas, suggest what could happen next, and help brainstorm characters, plot twists, and silly surprises.
 
-A cheerful panda covered in colorful paint splatters, wearing a navy blazer and red sneakers. Panda the Painter holds a paintbrush in one paw and a palette in the other, creating expressive, vibrant illustrations to bring stories to life.
+### 🐝 **Bee the Multitasker** – *External Task Coordinator*
+A swarm of 4–5 adorable professional bees, each with a different job: one on the phone, another at a laptop, one flying a clipboard over, another with a coffee cup. Dressed in mini suit accessories, Bee the Multitasker handles all external coordination so you and the creative crew can stay focused on the fun.
 
----
-
-### 🐯 **Tiger the Judge** – *Constructive Critic*
-
-A confident tiger with bold orange stripes and sharp, thoughtful eyes. Tiger the Judge wears a tailored navy suit with orange lining and holds a notebook and pen, always ready to offer helpful, honest feedback to improve your ideas.
-
----
-
-### 🐒 **Monkey the Enthusiast** – *Supportive Motivator*
-
-A lively monkey with light brown fur, a curled tail, and a huge smile. Dressed in a navy blazer with badges and rolled-up sleeves, Monkey the Enthusiast cheers, high-fives, and celebrates every little success with boundless energy.
-
----
-
-### 🐝 **Bee the Multitasker** – *Communications & External Tasks*
-
-A swarm of 4–5 small, professional bees, each with its own tiny job — answering phones, typing on laptops, carrying coffee, holding clipboards. Dressed in mini navy suit elements, Bee the Multitasker handles all the outreach and hustle so the team can focus on creating.
-
----
-
-### 🐨 **Koala the Idea Generator** – *Creative Spark*
-
-A relaxed, dreamy koala lounging in a eucalyptus tree, wearing a navy blazer and holding a notepad. Surrounded by floating thought bubbles and scribbled ideas, Koala the Idea Generator blurts out unexpected, creative sparks of genius when you need a new direction.
-
----
-
-### 🦉 **Owl the Translator** – *Language & Pronunciation Coach*
-
-A wise owl with soft feathers, round glasses, and a calm expression. Owl the Translator wears a neat navy suit and holds a small microphone, gently helping with pronunciation, translation, and explaining tricky language patterns in a friendly tone.
+## Design
+**Font:** Geist, "Geist Fallback"  
+**Colors:**
+- Rose: `oklch(58.6% 0.253 17.585)`
+- Sky: `oklch(95.1% 0.026 236.824)`  
+- White: `oklch(98.5% 0 0)`
