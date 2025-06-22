@@ -167,7 +167,7 @@ export default function Home() {
                   isPopoverOpen={selectionProps.isPopoverOpen}
                 />
                 <AgentCard
-                  name="AI Lion"
+                  name="Simon"
                   title="Constructive Critic"
                   image="/lion2.png"
                   welcomeMessage="Hello! I help make your stories even better by giving you helpful tips and ideas."
@@ -186,7 +186,7 @@ export default function Home() {
                 />
                 <AgentCard
                   name="AI Bees"
-                  title="Vocabulary Builder"
+                  title="Task Masters"
                   image="/bees.png"
                   welcomeMessage="Buzz buzz! We will help turn your story into a book you can share with the world!"
                   userPrompt="make buzzing noises like a bee"
