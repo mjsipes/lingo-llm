@@ -7,6 +7,9 @@ import AgentCardFrog from "@/components/AgentCardFrog";
 import ImageAgent from "@/components/ImageAgent";
 import AgentCardOwl from "@/components/AgentCardOwl";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 import Image from "next/image";
 import {
   ResizableHandle,
@@ -31,6 +34,8 @@ export default function Home() {
     "/lion2.png",
     "/bees.png",
   ]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
   const {
     messages,
     input,
@@ -57,6 +62,10 @@ export default function Home() {
 
   const handleImageGenerated = (imageUrl: string) => {
     setImages((prev) => [...prev, imageUrl]);
+  };
+
+  const handleDeleteImage = (indexToDelete: number) => {
+    setImages((prev) => prev.filter((_, index) => index !== indexToDelete));
   };
 
   return (
@@ -112,14 +121,35 @@ export default function Home() {
                   <ScrollArea className="h-full">
                     <div className="p-4 grid grid-cols-4 gap-2">
                       {images.map((image, index) => (
-                        <div key={`${image}-${index}`} className="w-full">
-                          <Image
-                            src={image}
-                            alt="image"
-                            width={150}
-                            height={150}
-                            className="w-full h-auto"
-                          />
+                        <div 
+                          key={`${image}-${index}`} 
+                          className="w-full"
+                        >
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <div className="cursor-pointer relative rounded-lg overflow-hidden">
+                                <Image
+                                  src={image}
+                                  alt="Generated artwork"
+                                  width={150}
+                                  height={150}
+                                  className="w-full h-auto"
+                                />
+                              </div>
+                            </PopoverTrigger>
+                            
+                            <PopoverContent className="w-auto p-0 border-0" side="right">
+                              <div className="relative">
+                                <Image
+                                  src={image}
+                                  alt="Generated artwork - enlarged"
+                                  width={480}
+                                  height={480}
+                                  className="rounded-lg"
+                                />
+                              </div>
+                            </PopoverContent>
+                          </Popover>
                         </div>
                       ))}
                     </div>

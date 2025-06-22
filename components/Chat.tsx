@@ -64,6 +64,8 @@ export function Chat({
     setMessages([]);
   };
 
+  const pinguWelcomeMessage =  "Hi! I'm your main storytelling buddy! Tell me about your adventures and I'll help bring your ideas to life!"
+  const pinguTitle ="Story Companion";
 
   return (
     <div className="flex flex-col h-full w-full bg-background">
