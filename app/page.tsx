@@ -23,7 +23,13 @@ import {
 } from "@/components/ui/resizable";
 import { toast } from "sonner";
 import { Copy } from "lucide-react";
-import {agentPandaSystemPrompt, agentBeeSystemPrompt, agentLionSystemPrompt, agentOwlSystemPrompt, agentFrogSystemPrompt} from "@/components/clientSystemPrompts";
+import {
+  agentPandaSystemPrompt,
+  agentBeeSystemPrompt,
+  agentLionSystemPrompt,
+  agentOwlSystemPrompt,
+  agentFrogSystemPrompt,
+} from "@/components/clientSystemPrompts";
 
 export default function Home() {
   // application state
@@ -40,11 +46,27 @@ export default function Home() {
     isLoading,
     setMessages,
   } = useChat();
+
   const [selectedText, setSelectedText] = useState("");
   const [textareaContent, setTextareaContent] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 });
   const [isUpperHalf, setIsUpperHalf] = useState(true);
+  const [agentLionUserPrompt, setAgentLionUserPrompt] = useState("hello");
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      setAgentLionUserPrompt("hello");
+      return;
+    }
+
+    const last3Messages = messages.slice(-3);
+    const formattedMessages = last3Messages
+      .map((msg) => `${msg.role}: ${msg.content}`)
+      .join("\n");
+
+    setAgentLionUserPrompt(formattedMessages);
+  }, [messages]);
 
   // Listen for text selection events and show copy popover when text is highlighted
   useEffect(() => {
@@ -126,7 +148,7 @@ export default function Home() {
             }}
           />
         </PopoverTrigger>
-        <PopoverContent 
+        <PopoverContent
           className="w-auto p-2 border-none"
           side={isUpperHalf ? "bottom" : "top"}
           align="center"
@@ -234,10 +256,10 @@ export default function Home() {
                 />
                 <AgentCard
                   name="AI Lion"
-                  title="Grammar & Translation Expert"
+                  title="Constructive Critic"
                   image="/lion2.png"
-                  welcomeMessage="Hello! I will help with grammar and translation. Highlight the text you want me to analyze, then click on my icon!"
-                  userPrompt={selectedText || "hello"}
+                  welcomeMessage="Hello! I specialize in providing thoughtful feedback and constructive criticism on your story."
+                  userPrompt={agentLionUserPrompt}
                   systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={isPopoverOpen}
                 />
