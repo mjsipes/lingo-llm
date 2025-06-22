@@ -260,51 +260,57 @@ export default function Home() {
                 />
               </div>
               {/* Image Gallery - takes most space */}
+              {/* Image Gallery - takes most space */}
               <div className="flex-1 min-h-0 px-4 py-3">
                 <div className="bg-sky-100 h-full rounded-lg">
                   <ScrollArea className="h-full">
                     <div className="p-4">
                       <div className="grid grid-cols-4 gap-2">
-                        {Array.from({ length: 2 }).map((_, index) => (
-                          <div key={index} className="w-full">
-                            {images[index] ? (
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <div className="cursor-pointer relative rounded-lg overflow-hidden">
-                                    <Image
-                                      src={images[index]}
-                                      alt="Generated artwork"
-                                      width={150}
-                                      height={150}
-                                      className="w-full h-auto"
-                                    />
-                                  </div>
-                                </PopoverTrigger>
+                        {images.map((image, index) => (
+                          <div key={`${image}-${index}`} className="w-full">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <div className="cursor-pointer relative rounded-lg overflow-hidden">
+                                  <Image
+                                    src={image}
+                                    alt="Generated artwork"
+                                    width={150}
+                                    height={150}
+                                    className="w-full h-auto"
+                                  />
+                                </div>
+                              </PopoverTrigger>
 
-                                <PopoverContent
-                                  className="w-auto p-0 border-0"
-                                  side="right"
-                                >
-                                  <div className="relative">
-                                    <Image
-                                      src={images[index]}
-                                      alt="Generated artwork - enlarged"
-                                      width={400}
-                                      height={380}
-                                      className="rounded-lg"
-                                    />
-                                  </div>
-                                </PopoverContent>
-                              </Popover>
-                            ) : (
-                              <div
-                                className={`w-full aspect-square ${
-                                  index === 0 ? "bg-white" : "bg-sky-50"
-                                } rounded-lg`}
-                              ></div>
-                            )}
+                              <PopoverContent
+                                className="w-auto p-0 border-0"
+                                side="right"
+                              >
+                                <div className="relative">
+                                  <Image
+                                    src={image}
+                                    alt="Generated artwork - enlarged"
+                                    width={400}
+                                    height={380}
+                                    className="rounded-lg"
+                                  />
+                                </div>
+                              </PopoverContent>
+                            </Popover>
                           </div>
                         ))}
+                        {images.length < 2 &&
+                          Array.from({ length: 2 - images.length }).map(
+                            (_, index) => (
+                              <div
+                                key={`skeleton-${index}`}
+                                className={`w-full aspect-square ${
+                                  images.length + index === 0
+                                    ? "bg-white"
+                                    : "bg-sky-50"
+                                } rounded-lg`}
+                              ></div>
+                            )
+                          )}
                       </div>
                     </div>
                   </ScrollArea>
