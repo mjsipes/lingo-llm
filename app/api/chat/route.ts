@@ -4,6 +4,7 @@ import { streamText } from 'ai';
 import system from './system';
 
 export async function POST(req: Request) {
+  console.log("hitting chat endpoint");
   const { messages, model = 'claude', systemPrompt = system } = await req.json();
 
   let modelConfig;
@@ -11,11 +12,13 @@ export async function POST(req: Request) {
   let headers;
 
   if (model === 'groq') {
+    console.log("hitting groq through chat");
     modelConfig = groq('llama-3.3-70b-versatile'); // or whichever Groq model you prefer
     providerOptions = undefined;
     headers = undefined;
   } else {
     // Default to Claude
+    console.log("hitting claude through chat");
     modelConfig = anthropic('claude-4-sonnet-20250514');
     providerOptions = {
       anthropic: {
