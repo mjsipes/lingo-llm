@@ -91,7 +91,7 @@ const ImageAgent = ({
             <AvatarImage src={image} />
             <AvatarFallback>AI</AvatarFallback>
           </Avatar>
-          <h1>{isLoading ? "Generating..." : name}</h1>
+          <h1>{name}</h1>
         </Button>
       </TooltipTrigger>
       <TooltipContent className="flex flex-row gap-4">

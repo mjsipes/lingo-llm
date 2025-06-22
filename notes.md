@@ -16,3 +16,5 @@ adding randome word inspirator.
 
 immediate next step = context to ai lion.
 
+next step: add context and image to imageagents
+

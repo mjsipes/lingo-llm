@@ -208,9 +208,9 @@ export default function Home() {
                 {/* ImageAgent */}
                 <div className="flex items-center justify-center">
                   <ImageAgent
-                    name="Panda the Painter"
+                    name="Palette the Camel"
                     title="Creative Painter"
-                    image="/panda.png"
+                    image="/camel.png"
                     welcomeMessage="I will help you create an image!"
                     userPrompt={selectedText || "a cute panda painting"}
                     systemPrompt={agentPandaSystemPrompt}
