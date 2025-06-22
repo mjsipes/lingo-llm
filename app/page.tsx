@@ -22,7 +22,7 @@ import {
   agentFrogSystemPrompt,
   camelSelfPortraitPrompt,
   pandaSelfPortraitPrompt,
-  styleGuidelines
+  styleGuidelines,
 } from "@/components/clientSystemPrompts";
 
 export default function Home() {
@@ -85,19 +85,7 @@ export default function Home() {
               </h1>
             </div>
             <div className="grid grid-rows-8 p-4 gap-2 flex-1 min-h-0 bg-gray-200">
-              <div className="row-span-1 bg-red-200 grid grid-cols-2">
-                <div className="flex items-center justify-center">
-                  <AgentCardFrog
-                    name="Ribbit the Writer"
-                    title="Creative Writing Assistant"
-                    image="/frog.png"
-                    welcomeMessage="I will help you build your story! Highlight the snippet of text you want me to add, then I will add it to your story."
-                    userPrompt={selectionProps.selectedText || "hello"}
-                    systemPrompt={agentFrogSystemPrompt}
-                    isPopoverOpen={selectionProps.isPopoverOpen}
-                  />
-                </div>
-                <div className="flex items-center justify-center">
+              <div className="row-span-1 bg-red-200 flex-row gap-10 flex items-center justify-center">
                   <ImageAgent
                     name="Palette the Camel"
                     title="Creative Painter"
@@ -118,7 +106,6 @@ export default function Home() {
                     onImageGenerated={handleImageGenerated}
                     image_model="dall-e-2"
                   />
-                </div>
               </div>
               <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
                 <div className="bg-blue-500 min-h-0 col-span-2">
@@ -141,8 +128,8 @@ export default function Home() {
               </div>
               <div className="row-span-1 bg-green-500 flex flex-row gap-10 items-center justify-center">
                 <AgentCardOwl
-                  name="AI Owl"
-                  title="Language & Pronunciation Coach"
+                  name="OW-el "
+                  title="Pronunciation Coach"
                   image="/owl2.png"
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
                   userPrompt={selectionProps.selectedText || "Hello"}
@@ -156,6 +143,15 @@ export default function Home() {
                   welcomeMessage="Hello! I specialize in providing thoughtful feedback and constructive criticism on your story."
                   userPrompt={agentLionUserPrompt || "hello"}
                   systemPrompt={agentLionSystemPrompt}
+                  isPopoverOpen={selectionProps.isPopoverOpen}
+                />
+                <AgentCardFrog
+                  name="Ribbit"
+                  title="Creative Writing Assistant"
+                  image="/frog.png"
+                  welcomeMessage="I love to give ideas on what direction your story should go."
+                  userPrompt={selectionProps.selectedText || "hello"}
+                  systemPrompt={agentFrogSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
                 />
                 <AgentCard
