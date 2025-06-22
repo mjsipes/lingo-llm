@@ -92,7 +92,7 @@ export default function Home() {
   return (
     <div className="h-screen overflow-hidden">
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
-        <ResizablePanel defaultSize={50} minSize={25} maxSize={50}>
+        <ResizablePanel defaultSize={36} minSize={25} maxSize={50}>
           {/* chat */}
           <div className="h-screen overflow-hidden">
             <Chat
@@ -107,7 +107,7 @@ export default function Home() {
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={75} className="h-full">
+        <ResizablePanel defaultSize={66} className="h-full">
           <div className="flex flex-col h-full">
             {/* header */}
             <div className="py-[10px] border-b flex-shrink-0">
@@ -146,14 +146,14 @@ export default function Home() {
               </div>
               {/* story building area */}
               <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
-                <Textarea
+                {/* <Textarea
                   className="bg-white border-0 focus-visible:ring-0 rounded-none resize-none h-full"
                   value={textareaContent}
                   onChange={(e) => setTextareaContent(e.target.value)}
-                />
-                <div className="bg-blue-500 min-h-0">
+                /> */}
+                <div className="bg-blue-500 min-h-0 col-span-2">
                   <ScrollArea className="h-full">
-                    <div className="p-4 grid grid-cols-2 gap-2">
+                    <div className="p-4 grid grid-cols-4 gap-2">
                       {images.map((image, index) => (
                         <div key={`${image}-${index}`} className="w-full">
                           <Image
