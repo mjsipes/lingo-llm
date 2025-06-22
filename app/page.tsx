@@ -29,6 +29,9 @@ import {
   agentLionSystemPrompt,
   agentOwlSystemPrompt,
   agentFrogSystemPrompt,
+  camelSelfPortraitPrompt,
+  pandaSelfPortraitPrompt,
+  styleGuidelines
 } from "@/components/clientSystemPrompts";
 
 export default function Home() {
@@ -53,6 +56,8 @@ export default function Home() {
   const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 });
   const [isUpperHalf, setIsUpperHalf] = useState(true);
   const [agentLionUserPrompt, setAgentLionUserPrompt] = useState("hello");
+  const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState() 
+  
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -212,7 +217,7 @@ export default function Home() {
                     title="Creative Painter"
                     image="/camel.png"
                     welcomeMessage="I will help you create an image!"
-                    userPrompt={selectedText || "a cute panda painting"}
+                    userPrompt={imageAgentUserPrompt || camelSelfPortraitPrompt}
                     systemPrompt={agentPandaSystemPrompt}
                     onImageGenerated={handleImageGenerated}
                     image_model="dall-e-3"
@@ -222,7 +227,7 @@ export default function Home() {
                     title="Creative Painter"
                     image="/panda.png"
                     welcomeMessage="I will help you create an image!"
-                    userPrompt={selectedText || "a cute panda painting"}
+                    userPrompt={imageAgentUserPrompt || pandaSelfPortraitPrompt}
                     systemPrompt={agentPandaSystemPrompt}
                     onImageGenerated={handleImageGenerated}
                     image_model="dall-e-2"
