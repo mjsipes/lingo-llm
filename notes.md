@@ -5,3 +5,13 @@ my mind is racing so i need to settle down and pick out my baby steps because i 
 big picture there will be no text, big picture it will jsut be image, big picture we need to change from sonner to a better mode. 
 right now i need to add debug infor for agentcardfox.
 
+
+
+getting owl to speak
+getting context for each image.
+giving context to the lion
+fixing clipboard
+loading state for image
+
+add image input
+

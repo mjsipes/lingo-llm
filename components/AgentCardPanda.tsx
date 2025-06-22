@@ -89,13 +89,13 @@ const AgentCardPanda = ({
           alt={`${name} avatar`}
           className="h-48 w-48 rounded-md"
         />
-        <div className="gap-2">
+        {/* <div className="gap-2">
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-white">
             {name}
           </h4>
           <span className="text-sm font-medium text-white">{title}</span>
           
-        </div>
+        </div> */}
       </TooltipContent>
     </Tooltip>
   );
