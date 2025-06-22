@@ -16,6 +16,7 @@ const AgentCardFrog = ({
   welcomeMessage,
   systemPrompt,
   userPrompt,
+  isPopoverOpen,
   onResponse,
 }: {
   name: string;
@@ -24,38 +25,44 @@ const AgentCardFrog = ({
   welcomeMessage: string;
   systemPrompt: string;
   userPrompt: string;
+  isPopoverOpen?: boolean;
+
   onResponse?: (response: string) => void;
 }) => {
-
-  const { messages, append, isLoading , setMessages} = useChat({
-    api: '/api/chat',
+  const { messages, append, isLoading, setMessages } = useChat({
+    api: "/api/chat",
     body: {
-      model: 'groq',
+      model: "groq",
       systemPrompt: systemPrompt,
     },
     onFinish: (message) => {
       if (onResponse) {
         onResponse(message.content);
       }
-    }
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(`Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`);
+    console.log(
+      `Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`
+    );
     if (isLoading) return;
     setIsOpen(true);
     setMessages([]);
     await append({
       id: Date.now().toString(),
-      role: 'user',
-      content: userPrompt
+      role: "user",
+      content: userPrompt,
     });
   };
 
   const handleOpenChange = (open: boolean) => {
+    if (!open && isPopoverOpen) {
+      return;
+    }
     setIsOpen(open);
   };
 
@@ -77,11 +84,11 @@ const AgentCardFrog = ({
           className="h-48 w-48 rounded-md"
         />
         <div className="gap-2">
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-white">
-              {name}
-            </h4>
-            <span className="text-sm font-medium text-white">{title}</span>
-{/* 
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-white">
+            {name}
+          </h4>
+          <span className="text-sm font-medium text-white">{title}</span>
+          {/* 
           <div className="w-[200px] h-[160px] overflow-y-auto">
             {messages.length === 0 ? (
               <div className="text-white/80 text-xs">{welcomeMessage}</div>

@@ -16,7 +16,7 @@ const AgentCard = ({
   welcomeMessage,
   systemPrompt,
   userPrompt,
-  isPopoverOpen
+  isPopoverOpen,
 }: {
   name: string;
   title: string;
@@ -26,36 +26,44 @@ const AgentCard = ({
   userPrompt: string;
   isPopoverOpen?: boolean;
 }) => {
-
-  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, append } = useChat({
-    api: '/api/chat',
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+    append,
+  } = useChat({
+    api: "/api/chat",
     body: {
-      model: 'groq',
+      model: "groq",
       systemPrompt: systemPrompt,
-    }
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(`Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`);
+    console.log(
+      `Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`
+    );
     if (isLoading) return;
     setIsOpen(true);
     await append({
       id: Date.now().toString(),
-      role: 'user',
-      content: userPrompt
+      role: "user",
+      content: userPrompt,
     });
   };
 
-const handleOpenChange = (open: boolean) => {
-  // Don't close tooltip if copy popover is open
-  if (!open && isPopoverOpen) {
-    return; // Keep tooltip open
-  }
-  setIsOpen(open);
-};
+  const handleOpenChange = (open: boolean) => {
+    if (!open && isPopoverOpen) {
+      return;
+    }
+    setIsOpen(open);
+  };
 
   return (
     <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
@@ -88,7 +96,9 @@ const handleOpenChange = (open: boolean) => {
             ) : (
               <div>
                 {(() => {
-                  const lastAiMessage = messages.filter(m => m.role === 'assistant').pop();
+                  const lastAiMessage = messages
+                    .filter((m) => m.role === "assistant")
+                    .pop();
                   return lastAiMessage ? (
                     <span className="text-white text-xs">
                       {lastAiMessage.content}

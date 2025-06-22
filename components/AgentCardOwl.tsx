@@ -16,6 +16,7 @@ const AgentCard = ({
   welcomeMessage,
   systemPrompt,
   userPrompt,
+  isPopoverOpen,
 }: {
   name: string;
   title: string;
@@ -23,23 +24,31 @@ const AgentCard = ({
   welcomeMessage: string;
   systemPrompt: string;
   userPrompt: string;
+  isPopoverOpen?: boolean;
 }) => {
-
-  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, append } = useChat({
-    api: '/api/chat',
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+    append,
+  } = useChat({
+    api: "/api/chat",
     body: {
-      model: 'groq',
+      model: "groq",
       systemPrompt: systemPrompt,
-    }
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);
 
   const playAudio = async (text: string) => {
-    const response = await fetch('/api/audio', {
-      method: 'POST',
+    const response = await fetch("/api/audio", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ text }),
     });
@@ -47,34 +56,39 @@ const AgentCard = ({
     const audioBlob = await response.blob();
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
-    
+
     audio.onended = () => {
       URL.revokeObjectURL(audioUrl);
     };
-    
+
     audio.play();
   };
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(`Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`);
+    console.log(
+      `Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`
+    );
     if (isLoading) return;
     setIsOpen(true);
-    
+
     playAudio(userPrompt);
-    
+
     await append({
       id: Date.now().toString(),
-      role: 'user',
-      content: userPrompt
+      role: "user",
+      content: userPrompt,
     });
   };
 
   const handleOpenChange = (open: boolean) => {
+    if (!open && isPopoverOpen) {
+      return;
+    }
     setIsOpen(open);
   };
 
-  const lastAiMessage = messages.filter(m => m.role === 'assistant').pop();
+  const lastAiMessage = messages.filter((m) => m.role === "assistant").pop();
 
   return (
     <Tooltip open={isOpen} onOpenChange={handleOpenChange}>

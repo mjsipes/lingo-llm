@@ -15,6 +15,7 @@ const AgentCardPanda = ({
   welcomeMessage,
   systemPrompt,
   userPrompt,
+  isPopoverOpen,
   onImageGenerated,
 }: {
   name: string;
@@ -23,26 +24,30 @@ const AgentCardPanda = ({
   welcomeMessage: string;
   systemPrompt: string;
   userPrompt: string;
+  isPopoverOpen?: boolean;
+
   onImageGenerated?: (imageUrl: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [lastGeneratedImage, setLastGeneratedImage] = useState<string | null>(null);
+  const [lastGeneratedImage, setLastGeneratedImage] = useState<string | null>(
+    null
+  );
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     console.log(`Generating image with prompt: ${userPrompt}`);
-    
+
     if (isLoading) return;
-    
+
     setIsOpen(true);
     setIsLoading(true);
-    
+
     try {
-      const response = await fetch('/api/image', {
-        method: 'POST',
+      const response = await fetch("/api/image", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt: userPrompt,
@@ -50,25 +55,28 @@ const AgentCardPanda = ({
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate image');
+        throw new Error("Failed to generate image");
       }
 
       const data = await response.json();
       const imageUrl = data.imageUrl;
-      
+
       setLastGeneratedImage(imageUrl);
-      
+
       if (onImageGenerated) {
         onImageGenerated(imageUrl);
       }
     } catch (error) {
-      console.error('Error generating image:', error);
+      console.error("Error generating image:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleOpenChange = (open: boolean) => {
+    if (!open && isPopoverOpen) {
+      return;
+    }
     setIsOpen(open);
   };
 

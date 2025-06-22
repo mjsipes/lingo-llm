@@ -35,7 +35,11 @@ import { Copy } from "lucide-react";
 
 export default function Home() {
   // application state
-  const [images, setImages] = useState(["/owl2.png", "/lion2.png", "/bees.png"]);
+  const [images, setImages] = useState([
+    "/owl2.png",
+    "/lion2.png",
+    "/bees.png",
+  ]);
   const {
     messages,
     input,
@@ -49,30 +53,24 @@ export default function Home() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 });
 
-  // use effects
+  // Listen for text selection events and show copy popover when text is highlighted
   useEffect(() => {
     const handleMouseUp = () => {
-      // Small delay to let the selection settle
       setTimeout(() => {
         const selection = window.getSelection();
         const selectionText = selection?.toString();
-        
+
         if (selectionText && selectionText.length > 0) {
-          console.log("Selection detected:", selectionText);
-          
-          // Get the selection coordinates
           const range = selection.getRangeAt(0);
           const rect = range.getBoundingClientRect();
-          
-          // Position the trigger at the bottom-right of selection, offset down and right
+
           setTriggerPosition({
-            x: rect.right + 10, // 10px to the right of right edge
-            y: rect.bottom + 5 // 5px below the bottom edge
+            x: rect.right + 10,
+            y: rect.bottom + 5,
           });
-          
+
           setIsPopoverOpen(true);
         } else {
-          console.log("No selection, hiding popover");
           setSelectedText("");
           setIsPopoverOpen(false);
         }
@@ -80,12 +78,13 @@ export default function Home() {
     };
 
     document.addEventListener("mouseup", handleMouseUp);
-    
+
     return () => {
       document.removeEventListener("mouseup", handleMouseUp);
     };
   }, []);
 
+  // Copy selected text to clipboard and trigger toast notification
   const handleCopyClick = async () => {
     const selection = window.getSelection()?.toString() || "";
     if (selection) {
@@ -93,10 +92,9 @@ export default function Home() {
         await navigator.clipboard.writeText(selection);
         setSelectedText(selection);
         setIsPopoverOpen(false);
-        
-        // Clear the text selection
+
         window.getSelection()?.removeAllRanges();
-        
+
         toast("Copied Text:", {
           description:
             selection.length > 50
@@ -111,11 +109,11 @@ export default function Home() {
   };
 
   const handleStoryBuilderResponse = (response: string) => {
-    setTextareaContent(prev => prev + response);
+    setTextareaContent((prev) => prev + response);
   };
 
   const handleImageGenerated = (imageUrl: string) => {
-    setImages(prev => [...prev, imageUrl]);
+    setImages((prev) => [...prev, imageUrl]);
   };
 
   //page
@@ -124,7 +122,7 @@ export default function Home() {
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
         <PopoverTrigger asChild>
           {/* Position trigger at the selection coordinates */}
-          <div 
+          <div
             className="absolute w-1 h-1 pointer-events-none"
             style={{
               left: `${triggerPosition.x}px`,
@@ -182,6 +180,7 @@ export default function Home() {
                     userPrompt={selectedText || "hello"}
                     systemPrompt="You are a creative writing assistant. Your response will be directly added to a story in a text box. Please only output the info from the user prompt."
                     onResponse={handleStoryBuilderResponse}
+                    isPopoverOpen={isPopoverOpen}
                   />
                 </div>
                 {/* AgentCardPanda */}
@@ -231,6 +230,7 @@ export default function Home() {
                   welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
                   userPrompt={selectedText || "Hello"}
                   systemPrompt="Pronounce the users text in a way for a child to understand. For example: hello = huh-LOH. Only respond with the pronunciation. Do not include any other text."
+                  isPopoverOpen={isPopoverOpen}
                 />
                 <AgentCard
                   name="AI Lion"

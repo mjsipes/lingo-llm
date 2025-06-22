@@ -12,7 +12,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import ReactMarkdown from "react-markdown";
 
 interface ChatProps {
   messages: any[];
@@ -127,55 +126,15 @@ export function Chat({
                   {message.role === "user" ? (
                     message.content
                   ) : (
-                    <div className="prose prose-sm max-w-none dark:prose-invert">
+                    <div>
                       {!message.content && isLoading && index === messages.length - 1 ? (
                         <span className="text-muted-foreground animate-pulse">
                           Thinking...
                         </span>
                       ) : (
-                        <ReactMarkdown
-                          components={{
-                            p: ({ children }) => (
-                              <p className="mb-2 last:mb-0">{children}</p>
-                            ),
-                            code: ({ children }) => (
-                              <code className="bg-muted-foreground/20 px-1 py-0.5 rounded text-xs">
-                                {children}
-                              </code>
-                            ),
-                            pre: ({ children }) => (
-                              <pre className="bg-muted-foreground/20 p-2 rounded overflow-x-auto text-xs">
-                                {children}
-                              </pre>
-                            ),
-                            ul: ({ children }) => (
-                              <ul className="ml-4 mb-2">{children}</ul>
-                            ),
-                            ol: ({ children }) => (
-                              <ol className="ml-4 mb-2">{children}</ol>
-                            ),
-                            li: ({ children }) => (
-                              <li className="mb-1">{children}</li>
-                            ),
-                            h1: ({ children }) => (
-                              <h1 className="text-base font-bold mb-2">
-                                {children}
-                              </h1>
-                            ),
-                            h2: ({ children }) => (
-                              <h2 className="text-sm font-bold mb-2">
-                                {children}
-                              </h2>
-                            ),
-                            h3: ({ children }) => (
-                              <h3 className="text-sm font-semibold mb-1">
-                                {children}
-                              </h3>
-                            ),
-                          }}
-                        >
+                        <span style={{ whiteSpace: 'pre-wrap' }}>
                           {message.content}
-                        </ReactMarkdown>
+                        </span>
                       )}
                     </div>
                   )}
