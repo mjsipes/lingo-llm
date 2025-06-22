@@ -71,7 +71,8 @@ export default function Home() {
 
           setIsPopoverOpen(true);
         } else {
-          setSelectedText("");
+          // console.log("setting selected text to empty")
+          // setSelectedText("");
           setIsPopoverOpen(false);
         }
       }, 10);
@@ -90,6 +91,7 @@ export default function Home() {
     if (selection) {
       try {
         await navigator.clipboard.writeText(selection);
+        console.log("setting selected text to ", selection);
         setSelectedText(selection);
         setIsPopoverOpen(false);
 
@@ -130,7 +132,7 @@ export default function Home() {
             }}
           />
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-2">
+        <PopoverContent className="w-auto p-2 border-none">
           <Button
             variant="ghost"
             size="sm"
