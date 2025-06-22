@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import AgentCard from "@/components/AgentCard";
 import AgentCardFrog from "@/components/AgentCardFrog";
 import AgentCardPanda from "@/components/AgentCardPanda";
+import AgentCardOwl from "@/components/AgentCardOwl";
+
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
@@ -171,7 +173,7 @@ export default function Home() {
               </div>
               {/* bottom row of agents */}
               <div className="row-span-1 bg-green-500 flex flex-row gap-10 items-center justify-center">
-                <AgentCard
+                <AgentCardOwl
                   name="AI Owl"
                   title="Language & Pronunciation Coach"
                   image="/owl2.png"
