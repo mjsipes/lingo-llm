@@ -230,7 +230,7 @@ export default function Home() {
               </div>
 
               {/* Image Gallery - takes most space */}
-              <div className="flex-1 min-h-0 p-3">
+              <div className="flex-1 min-h-0 px-4 py-3">
                 <div className="bg-sky-100 h-full rounded-lg">
                   <ScrollArea className="h-full">
                     <div className="p-4">
