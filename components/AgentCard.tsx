@@ -90,7 +90,7 @@ const AgentCard = ({
             <span className="text-sm font-medium text-white">{title}</span>
           </div>
 
-          <div className="w-[200px] h-[160px] overflow-y-auto">
+          <div className="w-[240px] h-[160px] overflow-y-auto">
             {messages.length === 0 ? (
               <div className="text-white/80 text-xs">{welcomeMessage}</div>
             ) : (

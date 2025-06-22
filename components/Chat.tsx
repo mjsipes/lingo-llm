@@ -101,7 +101,7 @@ export function Chat({
                 <span className="text-sm font-medium text-white">{pinguTitle}</span>
               </div>
 
-              <div className="w-[200px] h-[160px] overflow-y-auto">
+              <div className="w-[240px] h-[160px] overflow-y-auto">
                 <div className="text-white/80 text-xs">{pinguWelcomeMessage}</div>
               </div>
             </div>
