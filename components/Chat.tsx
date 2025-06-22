@@ -74,7 +74,7 @@ export function Chat({
   return (
     <div className="flex flex-col h-full w-full bg-background">
       {/* Pingu Header with Button Treatment */}
-      <div className="flex items-center justify-center px-4 py-3">
+      <div className="flex items-center justify-center pt-4">
         <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
           <TooltipTrigger asChild>
             <Button className="py-8" onClick={handlePinguClick}>
@@ -109,7 +109,7 @@ export function Chat({
 
       {/* Chat History */}
       <div className="flex-1 overflow-hidden w-full">
-        <ScrollArea className="h-full w-full px-4 py-2" ref={scrollAreaRef}>
+        <ScrollArea className="h-full w-full px-4 py-3" ref={scrollAreaRef}>
           <div className="space-y-2 w-full">
             {messages.map((message, index) => (
               <div

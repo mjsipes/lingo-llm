@@ -206,7 +206,7 @@ export default function Home() {
           <ResizablePanel defaultSize={50} className="h-full">
             <div className="flex flex-col h-full">
               {/* Image Agents Row */}
-              <div className="flex-shrink-0 flex flex-row gap-4 items-center justify-center p-4">
+              <div className="flex-shrink-0 flex flex-row gap-4 items-center justify-center pt-4">
                 <ImageAgent
                   name="Palette the Camel"
                   title="Creative Painter"
@@ -230,7 +230,7 @@ export default function Home() {
               </div>
 
               {/* Image Gallery - takes most space */}
-              <div className="flex-1 min-h-0 p-4">
+              <div className="flex-1 min-h-0 p-3">
                 <div className="bg-cyan-500 h-full rounded-lg">
                   <ScrollArea className="h-full">
                     <div className="p-4">
