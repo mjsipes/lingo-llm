@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   try {
     let processedPrompt = prompt;
     if (model === "dall-e-2") {
-      processedPrompt = prompt.slice(800);
+      processedPrompt = prompt.slice(-800);
     }
 
     console.log(`Generating image with prompt: ${processedPrompt}`);

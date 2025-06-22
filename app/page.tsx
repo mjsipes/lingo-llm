@@ -271,7 +271,7 @@ export default function Home() {
                   title="Constructive Critic"
                   image="/lion2.png"
                   welcomeMessage="Hello! I help make your stories even better by giving you helpful tips and ideas."
-                  userPrompt={agentLionUserPrompt || "hello"}
+                  userPrompt={backgroundContext || "hello"}
                   systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
                 />
