@@ -7,7 +7,7 @@ right now i need to add debug infor for agentcardfox.
 
 
 
-getting owl to speak
+add streaming or caching to the owl
 getting context for each image.
 giving context to the lion
 fixing clipboard

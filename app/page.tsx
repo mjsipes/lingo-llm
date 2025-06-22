@@ -12,12 +12,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import AgentCard from "@/components/AgentCard";
 import AgentCardFrog from "@/components/AgentCardFrog";
 import AgentCardPanda from "@/components/AgentCardPanda";
 import AgentCardOwl from "@/components/AgentCardOwl";
-
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
@@ -27,6 +31,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { toast } from "sonner";
+import { Copy } from "lucide-react";
 
 export default function Home() {
   // application state
@@ -41,46 +46,52 @@ export default function Home() {
   } = useChat();
   const [selectedText, setSelectedText] = useState("");
   const [textareaContent, setTextareaContent] = useState("");
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   // use effects
   useEffect(() => {
-    const handleSelection = async () => {
-      console.log("handleSelection triggered");
-      const selection = window.getSelection()?.toString() || "";
-      console.log(" selection: ", selection);
-      setSelectedText(selection);
-      if (selection) {
-        try {
-          await navigator.clipboard.writeText(selection);
-          console.log(" copied to clipboard");
-        } catch (err) {
-          console.log(" failed to copy");
-        }
-      }
-    };
     const handleMouseUp = () => {
-      const selection = window.getSelection()?.toString();
-      if (selection && selection.length > 0) {
-        handleSelection();
-      }
+      // Small delay to let the selection settle
+      setTimeout(() => {
+        const selection = window.getSelection()?.toString();
+        if (selection && selection.length > 0) {
+          console.log("Selection detected:", selection);
+          setIsPopoverOpen(true);
+        } else {
+          console.log("No selection, hiding popover");
+          setSelectedText("");
+          setIsPopoverOpen(false);
+        }
+      }, 10);
     };
+
     document.addEventListener("mouseup", handleMouseUp);
+    
     return () => {
       document.removeEventListener("mouseup", handleMouseUp);
     };
   }, []);
 
-  useEffect(() => {
-    if (selectedText) {
-      toast("Copied Text:", {
-        description:
-          selectedText.length > 50
-            ? `${selectedText.substring(0, 50)}...`
-            : selectedText,
-        position: "top-right",
-      });
+  const handleCopyClick = async () => {
+    const selection = window.getSelection()?.toString() || "";
+    if (selection) {
+      try {
+        await navigator.clipboard.writeText(selection);
+        setSelectedText(selection);
+        setIsPopoverOpen(false);
+        
+        toast("Copied Text:", {
+          description:
+            selection.length > 50
+              ? `${selection.substring(0, 50)}...`
+              : selection,
+          position: "top-right",
+        });
+      } catch (err) {
+        console.log("Failed to copy");
+      }
     }
-  }, [selectedText]);
+  };
 
   const handleStoryBuilderResponse = (response: string) => {
     setTextareaContent(prev => prev + response);
@@ -93,6 +104,23 @@ export default function Home() {
   //page
   return (
     <div className="h-screen overflow-hidden">
+      <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+        <PopoverTrigger asChild>
+          {/* Position trigger in the header so popover appears there */}
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1 h-1" />
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleCopyClick}
+            className="h-8 w-8 p-0"
+          >
+            <Copy className="h-4 w-4" />
+          </Button>
+        </PopoverContent>
+      </Popover>
+
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
         <ResizablePanel defaultSize={36} minSize={25} maxSize={50}>
           {/* chat */}
@@ -206,8 +234,7 @@ export default function Home() {
   );
 }
 
-
-const agentPandaCardSystemPrompt  = `You are a creative image generation assistant.
+const agentPandaCardSystemPrompt = `You are a creative image generation assistant.
 
 All characters are illustrated in a cinematic cartoon style that feels cohesive, expressive, and friendly — ideal for a learning platform for children. The visual tone is inspired by the charm of modern animated films with a soft, polished look that appeals to both kids and adults.
 
@@ -230,4 +257,4 @@ Core Style Attributes:
 Overall Vibe:
 - Professional but playful – they look like a kid-friendly startup crew
 - Cohesive and stylized, as if they all come from the same cinematic universe
-- Designed to be immediately readable, engaging, and emotionally expressive for children in an educational setting`
+- Designed to be immediately readable, engaging, and emotionally expressive for children in an educational setting`;
