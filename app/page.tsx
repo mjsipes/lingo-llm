@@ -64,16 +64,20 @@ export default function Home() {
     setAgentLionUserPrompt(formattedMessages);
   }, [isLoading]);
 
-  // useEffect for backgroundContext - analyzes messages for story context (only on new messages)
+  // useEffect for backgroundContext - analyzes messages for story context (only when streaming completes)
   useEffect(() => {
     console.log("backgroundContext useEffect called");
+    if (isLoading) {
+      console.log("backgroundContext - still loading, skip");
+      return;
+    }
     if (messages.length === 0) {
       console.log("backgroundContext set to: (empty)");
       setBackgroundContext("");
       return;
     }
 
-    // Only trigger when new messages are added (not on initial load or other changes)
+    // Only trigger when streaming completes
     const analyzeBackgroundContext = async () => {
       try {
         const formattedMessages = messages
@@ -102,19 +106,21 @@ export default function Home() {
     };
 
     analyzeBackgroundContext();
-  }, [messages.length]);
+  }, [isLoading]); // Only trigger when message count changes (new messages added)
 
-  // selectionProps.selectedText useEffect (only when not empty/null)
+  // useEffect for immediateSubject - analyzes selectedText (only when not empty/null)
   useEffect(() => {
     console.log("selectionProps.selectedText useEffect called");
     if (!selectionProps.selectedText || selectionProps.selectedText.trim() === "") {
-      console.log("   immediateSubject set to: (empty)");
+      console.log("immediateSubject set to: (empty)");
       setImmediateSubject("");
       return;
     }
+
     const analyzeImmediateSubject = async () => {
-      console.log("analyzeImmediateSubject. sending selectionProps.selectedText to groq for analysis");
-      console.log("   selectionProps.selectedText: " ,selectionProps.selectedText.slice(0, 100));
+            console.log("analyzeImmediateSubject. sending selectionProps.selectedText to groq for analysis");
+            console.log("   selectionProps.selectedText: " ,selectionProps.selectedText.slice(0, 100));
+
       try {
         const response = await fetch('/api/groq', {
           method: 'POST',
@@ -128,15 +134,16 @@ export default function Home() {
         });
         const data = await response.json();
         const subjectResult = data.content || "";
-        console.log("   groq subject result: " , subjectResult.slice(0, 100));
+                console.log("   groq subject result: " , subjectResult.slice(0, 100));
         console.log(`   immediateSubject set to: ${subjectResult.slice(0, 100)}...`);
         setImmediateSubject(subjectResult);
       } catch (error) {
-        console.error('   Error analyzing immediate subject:', error);
-        console.log("   immediateSubject set to: (error - empty)");
+        console.error('Error analyzing immediate subject:', error);
+        console.log("immediateSubject set to: (error - empty)");
         setImmediateSubject("");
       }
     };
+
     analyzeImmediateSubject();
   }, [selectionProps.selectedText]);
 
