@@ -123,7 +123,7 @@ export function Chat({
                     ${
                       message.role === "user"
                         ? "bg-primary text-primary-foreground ml-auto"
-                        : "bg-muted mr-auto"
+                        : "bg-sky-100 mr-auto"
                     }
                     ${message.content.length > 120 ? "w-full" : "max-w-[80%]"}
                   `}

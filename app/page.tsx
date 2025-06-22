@@ -231,7 +231,7 @@ export default function Home() {
 
               {/* Image Gallery - takes most space */}
               <div className="flex-1 min-h-0 p-3">
-                <div className="bg-cyan-500 h-full rounded-lg">
+                <div className="bg-sky-100 h-full rounded-lg">
                   <ScrollArea className="h-full">
                     <div className="p-4">
                       <div className="grid grid-cols-4 gap-2">
