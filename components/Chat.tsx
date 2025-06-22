@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -33,7 +33,7 @@ export function Chat({
   selectedText 
 }: ChatProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-
+  const [isOpen, setIsOpen] = useState(false);
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -52,7 +52,6 @@ export function Chat({
     scrollToBottom();
   }, [messages]);
 
-
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -60,45 +59,50 @@ export function Chat({
     }
   };
 
-  const handleNewChat = () => {
-    setMessages([]);
+  const handlePinguClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsOpen(true);
   };
 
-  const pinguWelcomeMessage =  "Hi! I'm your main storytelling buddy! Tell me about your adventures and I'll help bring your ideas to life!"
-  const pinguTitle ="Story Companion";
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+  };
+
+  const pinguWelcomeMessage = "Hi! I'm your main storytelling buddy! Tell me about your adventures and I'll help bring your ideas to life!";
+  const pinguTitle = "Story Companion";
 
   return (
     <div className="flex flex-col h-full w-full bg-background">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b">
-        <Tooltip>
+      {/* Pingu Header with Button Treatment */}
+      <div className="flex items-center justify-center px-4 py-3">
+        <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
           <TooltipTrigger asChild>
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/penguin.png" />
-              <AvatarFallback>AI</AvatarFallback>
-            </Avatar>
-          </TooltipTrigger>
-          <TooltipContent>
-            <img
-              src="/penguin.png"
-              alt="penguin avatar"
-              className="h-48 w-48 rounded-md"
-            />
-          </TooltipContent>
-        </Tooltip>
-        <div className="flex-1">
-          <div className="flex items-baseline gap-1">
-            <span className="font-medium text-sm">Pingu Penguin</span>
-          </div>
-        </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" onClick={handleNewChat}>
-              <Plus className="h-4 w-4" />
+            <Button className="py-8" onClick={handlePinguClick}>
+              <Avatar className="h-12 w-12">
+                <AvatarImage src="/penguin.png" />
+                <AvatarFallback>P</AvatarFallback>
+              </Avatar>
+              <h1>Pingu Penguin</h1>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>
-            <p>New chat</p>
+          <TooltipContent className="flex flex-row gap-4">
+            <img
+              src="/penguin.png"
+              alt="Pingu Penguin avatar"
+              className="h-48 w-48 rounded-md"
+            />
+            <div className="gap-2">
+              <div className="flex flex-row items-center gap-2">
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-white">
+                  Pingu Penguin
+                </h4>
+                <span className="text-sm font-medium text-white">{pinguTitle}</span>
+              </div>
+
+              <div className="w-[280px] h-[160px] overflow-y-auto">
+                <div className="text-white/80 text-xs">{pinguWelcomeMessage}</div>
+              </div>
+            </div>
           </TooltipContent>
         </Tooltip>
       </div>
@@ -107,7 +111,6 @@ export function Chat({
       <div className="flex-1 overflow-hidden w-full">
         <ScrollArea className="h-full w-full px-4 py-2" ref={scrollAreaRef}>
           <div className="space-y-2 w-full">
-
             {messages.map((message, index) => (
               <div
                 key={message.id}
