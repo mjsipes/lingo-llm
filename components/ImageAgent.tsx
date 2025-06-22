@@ -37,9 +37,8 @@ const ImageAgent = ({
   );
 
   const handleClick = async (e: React.MouseEvent) => {
+    console.log("clicked. sending req to image api");
     e.preventDefault();
-    console.log(`Generating image with prompt: ${userPrompt}`);
-
     if (isLoading) return;
 
     setIsOpen(true);
@@ -53,7 +52,7 @@ const ImageAgent = ({
         },
         body: JSON.stringify({
           prompt: userPrompt,
-          model: image_model
+          model: image_model,
         }),
       });
 
@@ -63,7 +62,7 @@ const ImageAgent = ({
 
       const data = await response.json();
       const imageUrl = data.imageUrl;
-
+      console.log("image recieved, adding url to array");
       setLastGeneratedImage(imageUrl);
 
       if (onImageGenerated) {

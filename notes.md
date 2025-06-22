@@ -14,6 +14,6 @@ ribbit and beez need to work
 getting context for each image.
 loading state for image + make bigger + delete
 
-adding randome word inspirator.
 
+adding randome word inspirator.
 
