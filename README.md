@@ -1,99 +1,88 @@
-hello world 
-did we save the project?
+UC Berkeley's AI Hackathon is back! Cal Hacks will be bringing you two days of hacking on the best AI technology the world has to offer. With support from Anthropic, Google, Fetch AI, and more, this will be a monumental event no future AI/LLM developer can afford to miss. You'll even have chance to pitch your project to investors, and win cash prizes! This event is your chance to explore the potential of large language models and other open source APIs, all while making a lasting impact in the world of artificial intelligence.
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+Geist, "Geist Fallback
+rose oklch(58.6% 0.253 17.585)
+sky oklch(95.1% 0.026 236.824)
+white oklch(98.5% 0 0)
 
-## Features
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
 
-## Demo
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
 
-## Deploy to Vercel
 
-Vercel deployment will guide you through creating a Supabase account and project.
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+the goal of this app is to be a way for kids to interact and learn with ai. we might one day end up living in a world were kids learn from ai, or kdis are orchestrating ai, and we all are practising that calling it prompt engineering, but what is a good way for kids to think about it? so the list of chat helper buttons and prompting box are two rows . the top row has a list for 4-5 different agents. they will be implements as buttons with an avatar inside it and a little description for each, just enough for their name. it will be like artist, enthusiast, judge, idea generator, and so when you click on them it sends whatever message was in the prompt box to that agent, and they responde into a shadcn tooltip so it kind of looks like dialogue. so like if i want the randome word generator i can just tap him spam and even though there is nothing in the prompt box it just wont send anything to the model. but it does send a request to that function each time so the tooltip will just keep changing with the different responses the avatar spits out. 
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+how will kids learn to interact with and orchestrate agents, that is if we end up in a world with the agent verse, or will we just have one agent that is super good at everything? its lkind of like in ai we are goin through the history of religion . is there one god or many gods? 
 
-## Clone and run locally
+there is no way to tell what the future will be like with ai and humans.
+right now  we can learn from llms and orchestrate them.
+this time may pass. we may live in a future where ai is more powerful alone than in partnership with us.
+but we may also live for al ong time in a world where the most powerful is the dynamic duo of human and ai, and then our job is to orchestrate ai.
+ai might just take over the world and there be nothing we can do to make the world more productive.
+but the future could also be more so heading in the direction of orchestration. maybe we hit a physical limit soon where the ai;s just cant have a lot of context for a long time and the most powerful entinty is the dynamic duo of human and ai. If thats the
+so if thats the future we live in, how do we teach kids to learn from llms, orchestrate these llms, and what does this experience look like? 
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+i focused on the specif usecase of writing multi lingual stories with ai to help learn a language
 
-2. Create a Next.js app using the Supabase Starter template npx command
+this was my exploration into what this experience may looks like. The child as they are learning can call to these different anthromorphic characters, each serving their own purpose. In the real world these can be separate ai agents that perform different tasks or the different tools that one agent can perform.
+I wanted to make it intuitive for children, something they could digest and get the hang of. 
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+they have atthere is the main ai agent they talk with llm lione. he is like the main thread and controls the chat interface. but then there are two special agent that help turn the conversation into a story. there is wrigley the writer and dingo dalle. they have special ablities, they can generate images and add the content from the chat into the story. then there is a group of single purpose agents with specific usecases, they can give feedback, inspiration, seeds of randomness, and translation. The goal with these agents is to be fast, and respond as if its dialogue. 
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+i hid the complexity of tools calling and agent verse behind the idea that, these are your friends, and they can help you with a specific task.
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
 
-3. Use `cd` to change into the app's directory
 
-   ```bash
-   cd with-supabase-app
-   ```
 
-4. Rename `.env.example` to `.env.local` and update the following:
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
 
-5. You can now run the Next.js local development server:
 
-   ```bash
-   npm run dev
-   ```
+### 🐧 **Pingu** – *Main Character / Learner Avatar*
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+A classic, adorable cartoon penguin with a navy-blue blazer and big, curious eyes. Pingu is the explorer of the group — asking questions, trying new things, and learning alongside the child.
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+---
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+### 🐸 **Ribbit the Writer** – *Story Writer*
 
-## Feedback and issues
+A quirky green frog with oversized round glasses, a navy-blue suit jacket over a green shirt, and an eager expression. Ribbit loves crafting stories and writing plot twists, always ready with a keyboard or typewriter.
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+---
 
-## More Supabase examples
+### 🐼 **Panda the Painter** – *Visual Artist*
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+A cheerful panda covered in colorful paint splatters, wearing a navy blazer and red sneakers. Panda the Painter holds a paintbrush in one paw and a palette in the other, creating expressive, vibrant illustrations to bring stories to life.
+
+---
+
+### 🐯 **Tiger the Judge** – *Constructive Critic*
+
+A confident tiger with bold orange stripes and sharp, thoughtful eyes. Tiger the Judge wears a tailored navy suit with orange lining and holds a notebook and pen, always ready to offer helpful, honest feedback to improve your ideas.
+
+---
+
+### 🐒 **Monkey the Enthusiast** – *Supportive Motivator*
+
+A lively monkey with light brown fur, a curled tail, and a huge smile. Dressed in a navy blazer with badges and rolled-up sleeves, Monkey the Enthusiast cheers, high-fives, and celebrates every little success with boundless energy.
+
+---
+
+### 🐝 **Bee the Multitasker** – *Communications & External Tasks*
+
+A swarm of 4–5 small, professional bees, each with its own tiny job — answering phones, typing on laptops, carrying coffee, holding clipboards. Dressed in mini navy suit elements, Bee the Multitasker handles all the outreach and hustle so the team can focus on creating.
+
+---
+
+### 🐨 **Koala the Idea Generator** – *Creative Spark*
+
+A relaxed, dreamy koala lounging in a eucalyptus tree, wearing a navy blazer and holding a notepad. Surrounded by floating thought bubbles and scribbled ideas, Koala the Idea Generator blurts out unexpected, creative sparks of genius when you need a new direction.
+
+---
+
+### 🦉 **Owl the Translator** – *Language & Pronunciation Coach*
+
+A wise owl with soft feathers, round glasses, and a calm expression. Owl the Translator wears a neat navy suit and holds a small microphone, gently helping with pronunciation, translation, and explaining tricky language patterns in a friendly tone.
