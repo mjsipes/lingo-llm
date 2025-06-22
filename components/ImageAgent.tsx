@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const AgentCardPanda = ({
+const ImageAgent = ({
   name,
   title,
   image,
@@ -16,6 +16,7 @@ const AgentCardPanda = ({
   systemPrompt,
   userPrompt,
   isPopoverOpen,
+  image_model,
   onImageGenerated,
 }: {
   name: string;
@@ -25,6 +26,7 @@ const AgentCardPanda = ({
   systemPrompt: string;
   userPrompt: string;
   isPopoverOpen?: boolean;
+  image_model: string;
 
   onImageGenerated?: (imageUrl: string) => void;
 }) => {
@@ -51,6 +53,7 @@ const AgentCardPanda = ({
         },
         body: JSON.stringify({
           prompt: userPrompt,
+          model: image_model
         }),
       });
 
@@ -109,4 +112,4 @@ const AgentCardPanda = ({
   );
 };
 
-export default AgentCardPanda;
+export default ImageAgent;

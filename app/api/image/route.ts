@@ -1,5 +1,5 @@
 export async function POST(req: Request) {
-  const { prompt } = await req.json();
+  const { prompt, model } = await req.json();
 
   try {
     const response = await fetch('https://api.openai.com/v1/images/generations', {
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'dall-e-3',
+        model: model,
         prompt: prompt,
         n: 1,
         size: '1024x1024',
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
+    console.log("RESPONSE: api/image ... ", data);
     const imageUrl = data.data[0].url;
 
     return Response.json({ imageUrl });

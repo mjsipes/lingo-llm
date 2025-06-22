@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import AgentCard from "@/components/AgentCard";
 import AgentCardFrog from "@/components/AgentCardFrog";
-import AgentCardPanda from "@/components/AgentCardPanda";
+import ImageAgent from "@/components/ImageAgent";
 import AgentCardOwl from "@/components/AgentCardOwl";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
@@ -205,9 +205,9 @@ export default function Home() {
                     isPopoverOpen={isPopoverOpen}
                   />
                 </div>
-                {/* AgentCardPanda */}
+                {/* ImageAgent */}
                 <div className="flex items-center justify-center">
-                  <AgentCardPanda
+                  <ImageAgent
                     name="Panda the Painter"
                     title="Creative Painter"
                     image="/panda.png"
@@ -215,6 +215,17 @@ export default function Home() {
                     userPrompt={selectedText || "a cute panda painting"}
                     systemPrompt={agentPandaSystemPrompt}
                     onImageGenerated={handleImageGenerated}
+                    image_model="dall-e-3"
+                  />
+                  <ImageAgent
+                    name="Panda the Painter"
+                    title="Creative Painter"
+                    image="/panda.png"
+                    welcomeMessage="I will help you create an image!"
+                    userPrompt={selectedText || "a cute panda painting"}
+                    systemPrompt={agentPandaSystemPrompt}
+                    onImageGenerated={handleImageGenerated}
+                    image_model="dall-e-2"
                   />
                 </div>
               </div>
