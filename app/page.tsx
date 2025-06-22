@@ -52,6 +52,7 @@ export default function Home() {
   const [textareaContent, setTextareaContent] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 });
+  const [isUpperHalf, setIsUpperHalf] = useState(true);
 
   // Listen for text selection events and show copy popover when text is highlighted
   useEffect(() => {
@@ -63,16 +64,17 @@ export default function Home() {
         if (selectionText && selectionText.length > 0) {
           const range = selection.getRangeAt(0);
           const rect = range.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const upperHalf = rect.bottom < viewportHeight / 2;
 
+          setIsUpperHalf(upperHalf);
           setTriggerPosition({
-            x: rect.right + 10,
-            y: rect.bottom + 5,
+            x: rect.left + rect.width / 2,
+            y: upperHalf ? rect.bottom + 5 : rect.top - 5,
           });
 
           setIsPopoverOpen(true);
         } else {
-          // console.log("setting selected text to empty")
-          // setSelectedText("");
           setIsPopoverOpen(false);
         }
       }, 10);
@@ -132,7 +134,11 @@ export default function Home() {
             }}
           />
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-2 border-none">
+        <PopoverContent 
+          className="w-auto p-2 border-none"
+          side={isUpperHalf ? "bottom" : "top"}
+          align="center"
+        >
           <Button
             variant="ghost"
             size="sm"
