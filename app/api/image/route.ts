@@ -1,6 +1,7 @@
 export async function POST(req: Request) {
-  console.log("image api hit");
   const { prompt, model } = await req.json();
+  console.log("\n\nimage api hit for ", model);
+
 
   try {
     let processedPrompt = prompt;
@@ -8,7 +9,7 @@ export async function POST(req: Request) {
       processedPrompt = prompt.slice(-800);
     }
 
-    console.log(`Generating image with prompt: ${processedPrompt}`);
+    console.log(`Generating image with prompt: ${processedPrompt}\n\n`);
 
     const response = await fetch(
       "https://api.openai.com/v1/images/generations",
