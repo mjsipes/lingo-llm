@@ -33,11 +33,7 @@ import {
 } from "@/components/clientSystemPrompts";
 
 export default function Home() {
-  const [images, setImages] = useState([
-    "/owl2.png",
-    "/lion2.png",
-    "/bees.png",
-  ]);
+  const [images, setImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const {
@@ -54,8 +50,8 @@ export default function Home() {
   const [pandaAgentUserPrompt, setPandaAgentUserPrompt] = useState<string>();
   const [backgroundContext, setBackgroundContext] = useState<string>("");
   const [immediateSubject, setImmediateSubject] = useState<string>("");
-
   // Only trigger when streaming completes
+
   const analyzeBackgroundContext = async () => {
     try {
       const formattedMessages = messages
@@ -96,7 +92,7 @@ export default function Home() {
       return;
     }
     analyzeBackgroundContext();
-  }, [isLoading]); // Only trigger when message count changes (new messages added)
+  }, [isLoading]);
 
   const analyzeImmediateSubject = async () => {
     console.log(
@@ -130,7 +126,6 @@ export default function Home() {
       setImmediateSubject("");
     }
   };
-
   // useEffect for immediateSubject - analyzes selectedText (only when not empty/null)
   useEffect(() => {
     console.log("selectionProps.selectedText useEffect called");
@@ -144,7 +139,6 @@ export default function Home() {
     }
     analyzeImmediateSubject();
   }, [selectionProps.selectedText]);
-
   // useEffect to combine backgroundContext and immediateSubject into imageAgentUserPrompt
   useEffect(() => {
     console.log("backgroundContext immediateSubject useEffect called");
@@ -184,7 +178,9 @@ export default function Home() {
       });
       const data = await response.json();
       const simplifiedPrompt = data.content || "";
-      console.log(`pandaAgentUserPrompt set to: ${simplifiedPrompt.slice(0, 100)}...`);
+      console.log(
+        `pandaAgentUserPrompt set to: ${simplifiedPrompt.slice(0, 100)}...`
+      );
       setPandaAgentUserPrompt(simplifiedPrompt);
     } catch (error) {
       console.error("Error creating panda prompt:", error);
@@ -215,14 +211,12 @@ export default function Home() {
   return (
     <div className="h-screen overflow-hidden flex flex-col">
       <SelectionPopover {...selectionProps} />
-
       {/* Header - fixed height */}
       <div className="py-[10px] border-b flex-shrink-0">
         <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
           lingo llm
         </h1>
       </div>
-
       {/* Resizable area - takes remaining height */}
       <div className="flex-1 min-h-0">
         <ResizablePanelGroup direction="horizontal" className="h-full w-full">
@@ -265,43 +259,50 @@ export default function Home() {
                   image_model="dall-e-2"
                 />
               </div>
-
               {/* Image Gallery - takes most space */}
               <div className="flex-1 min-h-0 px-4 py-3">
                 <div className="bg-sky-100 h-full rounded-lg">
                   <ScrollArea className="h-full">
                     <div className="p-4">
                       <div className="grid grid-cols-4 gap-2">
-                        {images.map((image, index) => (
-                          <div key={`${image}-${index}`} className="w-full">
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <div className="cursor-pointer relative rounded-lg overflow-hidden">
-                                  <Image
-                                    src={image}
-                                    alt="Generated artwork"
-                                    width={150}
-                                    height={150}
-                                    className="w-full h-auto"
-                                  />
-                                </div>
-                              </PopoverTrigger>
+                        {Array.from({ length: 2 }).map((_, index) => (
+                          <div key={index} className="w-full">
+                            {images[index] ? (
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <div className="cursor-pointer relative rounded-lg overflow-hidden">
+                                    <Image
+                                      src={images[index]}
+                                      alt="Generated artwork"
+                                      width={150}
+                                      height={150}
+                                      className="w-full h-auto"
+                                    />
+                                  </div>
+                                </PopoverTrigger>
 
-                              <PopoverContent
-                                className="w-auto p-0 border-0"
-                                side="right"
-                              >
-                                <div className="relative">
-                                  <Image
-                                    src={image}
-                                    alt="Generated artwork - enlarged"
-                                    width={400}
-                                    height={380}
-                                    className="rounded-lg"
-                                  />
-                                </div>
-                              </PopoverContent>
-                            </Popover>
+                                <PopoverContent
+                                  className="w-auto p-0 border-0"
+                                  side="right"
+                                >
+                                  <div className="relative">
+                                    <Image
+                                      src={images[index]}
+                                      alt="Generated artwork - enlarged"
+                                      width={400}
+                                      height={380}
+                                      className="rounded-lg"
+                                    />
+                                  </div>
+                                </PopoverContent>
+                              </Popover>
+                            ) : (
+                              <div
+                                className={`w-full aspect-square ${
+                                  index === 0 ? "bg-white" : "bg-sky-50"
+                                } rounded-lg`}
+                              ></div>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -310,7 +311,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Supporting Characters Row */}
               <div className="flex-shrink-0 flex flex-row gap-4 items-center justify-center p-4">
                 <AgentCardOwl
                   name="OW-el "
