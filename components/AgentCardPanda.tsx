@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useChat } from "@ai-sdk/react";
 
-const AgentCardFrog = ({
+const AgentCardPanda = ({
   name,
   title,
   image,
@@ -104,4 +104,4 @@ const AgentCardFrog = ({
   );
 };
 
-export default AgentCardFrog;
+export default AgentCardPanda;
