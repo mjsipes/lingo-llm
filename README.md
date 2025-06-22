@@ -30,6 +30,14 @@ The Spanish learning happens through collaborative storytelling, where AI agents
 
 ![lingo llm](./lingollm.png)
 
+## System Architecture
+
+Lingo LLM uses a multi-agent AI system with intelligent context management. The backend connects to three AI services: Claude 4 Sonnet for reasoning, OpenAI for image generation and audio, and Groq for fast responses. Each character is designed with specific capabilities that map to these underlying services.
+
+The system maintains conversation context through smart summarization: persistent messages get condensed into background context, while selected text becomes the immediate subject. This allows image-generating agents to create relevant visuals and keeps all characters contextually aware without overwhelming the models.
+
+![lingo llm](./lingollmdiagram.png)
+
 ## Characters
 
 ### 🐧 **Pingu** – *Main Storyteller*
