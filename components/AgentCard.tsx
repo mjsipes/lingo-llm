@@ -47,7 +47,7 @@ const AgentCard = ({
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     console.log(
-      `Sending message to ${name}: \n System Prompt: ${systemPrompt} \n User Prompt: ${userPrompt}`
+      `Sending message to ${name}: \n User Prompt: ${userPrompt.slice(0, 100)}`
     );
     if (isLoading) return;
     setIsOpen(true);

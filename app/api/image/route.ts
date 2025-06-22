@@ -21,7 +21,8 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
-    console.log("RESPONSE: api/image ... ", data);
+    console.log("RESPONSE: api/image ... ");
+    // console.log(data);
     const imageUrl = data.data[0].url;
 
     return Response.json({ imageUrl });

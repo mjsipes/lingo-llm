@@ -21,7 +21,8 @@ next step: add context and image to imageagents
 saving this massive massive prompt, lets first change grok to a regular api call.:
 
 
-hello, please help me improve the imageAgentUserPrompt in the same way that we improve the agentLionUserPrompt. i would like for the imageAgentUserPrompt to have context from the messages and selected text as well. can we please create a 2 use effects to manage the agentLionUserPrompt. i woud like for the image prompt to consist of two theings. background context and immediate subject. the immediate subject will be selectedText, when selected text changes, i would like for a state variable names immediateSubject to be generated via an api call to groq asking to analyze the contents of the selectedText and create an immediate subject line suitable for passing into an image gen model. likewise, i would like a useeffect that calls groq api whenever messages changes, i would like for it to take messages and say create an appropriate background context of the story from the messages suitable for giving imagery to an ai model. when it returns, it sets a variable called backgroundContext to the returned message, finally, pass in a prompt to the two image agents that combines the backgroundContect, immediateSubject, and styleGuidelines. here is an example of calling grok api:
+hello, please help me improve the imageAgentUserPrompt in the same way that we improve the agentLionUserPrompt. i would like for the imageAgentUserPrompt to have context from the messages and selectionProps.selectedText as well. can we please create a 2 use effects to manage the imageAgentUserPrompt. i woud like for the image prompt to consist of two theings. backgroundContext and immediateSubject.  immediateSubject will be related to selectionProps.selectedText, when selectionProps.selectedText changes, i would like for immediateSubject to be updated via an api call to groq asking to analyze the contents of selectionProps.selectedText and create an immediateSubject  suitable for passing into an image gen model. likewise, i would like a useeffect that calls groq api whenever messages changes, i would like for it to take the messages in array of messages and say create an appropriate background context of the story from the messages suitable for giving imagery to an ai model. when it returns, it sets backgroundContext to the returned message, finally, pass in a prompt to the two image agents that combines the backgroundContect, immediateSubject, and styleGuidelines. in the following way: generate an image with the following background context: ${backgroundContext}. The immediate subject of the image should be: ${immediateSubject}. Please adhere to following styleguide: ${styleGuidelines}
+here is an example of calling grok api:
 here is example of hitting groq endpoint:
 here is an example of hitting the groq endpoint:
 const response = await fetch('/api/groq', {
@@ -34,7 +35,7 @@ const response = await fetch('/api/groq', {
    userPrompt: "What is the capital of France?",
  }),
 });
-
 const data = await response.json();
 console.log(data.content); // The AI response
+if you have any questions about implementation please ask me. al
 

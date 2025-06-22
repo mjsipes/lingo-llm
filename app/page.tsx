@@ -41,10 +41,18 @@ export default function Home() {
   } = useChat();
 
   const selectionProps = useTextSelection();
-  const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState();
+  const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState<string>();
   const [agentLionUserPrompt, setAgentLionUserPrompt] = useState<string>();
+  const [backgroundContext, setBackgroundContext] = useState<string>("");
+  const [immediateSubject, setImmediateSubject] = useState<string>("");
 
+  // useEffect for agentLionUserPrompt (existing) - only when streaming completes
   useEffect(() => {
+    console.log("isLoading useEffect called:", isLoading);
+    if (isLoading) {
+      console.log("isLoading - still loading, skip");
+      return;
+    }
     if (messages.length === 0) {
       return;
     }
@@ -52,8 +60,98 @@ export default function Home() {
     const formattedMessages = last3Messages
       .map((msg) => `${msg.role}: ${msg.content}`)
       .join("\n");
+    console.log(`agentLionUserPrompt set to: ${formattedMessages.slice(0, 20)}...`);
     setAgentLionUserPrompt(formattedMessages);
-  }, [messages]);
+  }, [isLoading]);
+
+  // useEffect for backgroundContext - analyzes messages for story context (only on new messages)
+  useEffect(() => {
+    console.log("backgroundContext useEffect called");
+    if (messages.length === 0) {
+      console.log("backgroundContext set to: (empty)");
+      setBackgroundContext("");
+      return;
+    }
+
+    // Only trigger when new messages are added (not on initial load or other changes)
+    const analyzeBackgroundContext = async () => {
+      try {
+        const formattedMessages = messages
+          .map((msg) => `${msg.role}: ${msg.content}`)
+          .join("\n");
+
+        const response = await fetch('/api/groq', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            systemPrompt: "You are an expert at analyzing story content and creating background context descriptions for image generation. Based on the conversation history, create a concise background context description suitable for an AI image generation model.",
+            userPrompt: `Analyze the following conversation and create an appropriate background context description for image generation that captures the story's setting, mood, and atmosphere:\n\n${formattedMessages}`,
+          }),
+        });
+        const data = await response.json();
+        const contextResult = data.content || "";
+        console.log(`backgroundContext set to: ${contextResult.slice(0, 20)}...`);
+        setBackgroundContext(contextResult);
+      } catch (error) {
+        console.error('Error analyzing background context:', error);
+        console.log("backgroundContext set to: (error - empty)");
+        setBackgroundContext("");
+      }
+    };
+
+    analyzeBackgroundContext();
+  }, [messages.length]);
+
+  // selectionProps.selectedText useEffect (only when not empty/null)
+  useEffect(() => {
+    console.log("selectionProps.selectedText useEffect called");
+    if (!selectionProps.selectedText || selectionProps.selectedText.trim() === "") {
+      console.log("   immediateSubject set to: (empty)");
+      setImmediateSubject("");
+      return;
+    }
+    const analyzeImmediateSubject = async () => {
+      console.log("analyzeImmediateSubject. sending selectionProps.selectedText to groq for analysis");
+      console.log("   selectionProps.selectedText: " ,selectionProps.selectedText.slice(0, 100));
+      try {
+        const response = await fetch('/api/groq', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            systemPrompt: "You are an expert at analyzing text content and creating immediate subject descriptions for image generation. Based on the selected text, create a concise description of what should be the main subject/focus of an image.",
+            userPrompt: `Analyze the following selected text and create an appropriate immediate subject description for image generation that captures the main focus, characters, or objects that should be prominently featured in the image:\n\n${selectionProps.selectedText}`,
+          }),
+        });
+        const data = await response.json();
+        const subjectResult = data.content || "";
+        console.log("   groq subject result: " , subjectResult.slice(0, 100));
+        console.log(`   immediateSubject set to: ${subjectResult.slice(0, 100)}...`);
+        setImmediateSubject(subjectResult);
+      } catch (error) {
+        console.error('   Error analyzing immediate subject:', error);
+        console.log("   immediateSubject set to: (error - empty)");
+        setImmediateSubject("");
+      }
+    };
+    analyzeImmediateSubject();
+  }, [selectionProps.selectedText]);
+
+  // useEffect to combine backgroundContext and immediateSubject into imageAgentUserPrompt
+  useEffect(() => {
+    console.log("imageAgentUserPrompt useEffect called");
+    if (backgroundContext || immediateSubject) {
+      const prompt = `Generate an image with the following background context: ${backgroundContext}. The immediate subject of the image should be: ${immediateSubject}. Please adhere to following styleguide: ${styleGuidelines}`;
+      console.log(`   imageAgentUserPrompt set w ${prompt.length} characters: ${prompt.slice(0, 100)}...`);
+      setImageAgentUserPrompt(prompt);
+    } else {
+      console.log("   imageAgentUserPrompt set to: undefined");
+      setImageAgentUserPrompt(undefined);
+    }
+  }, [backgroundContext, immediateSubject]);
 
   const handleImageGenerated = (imageUrl: string) => {
     setImages((prev) => [...prev, imageUrl]);
