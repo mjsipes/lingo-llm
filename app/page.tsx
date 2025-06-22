@@ -189,7 +189,7 @@ export default function Home() {
     {/* Resizable area - takes remaining height */}
     <div className="flex-1 min-h-0">
       <ResizablePanelGroup direction="horizontal" className="h-full w-full">
-        <ResizablePanel defaultSize={50} minSize={40} maxSize={60}>
+        <ResizablePanel defaultSize={50} minSize={40} maxSize={50}>
           <div className="h-full overflow-hidden">
             <Chat
               messages={messages}
@@ -205,8 +205,8 @@ export default function Home() {
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={50} className="h-full">
           <div className="flex flex-col h-full">
-            <div className="grid grid-rows-8 flex-1 min-h-0 bg-gray-200">
-              <div className="row-span-1 bg-red-200 flex-row gap-10 flex items-center justify-center">
+            <div className="grid grid-rows-8 flex-1 min-h-0 ">
+              <div className="row-span-1 flex-row gap-10 flex items-center justify-center">
                 <ImageAgent
                   name="Palette the Camel"
                   title="Creative Painter"
@@ -228,7 +228,7 @@ export default function Home() {
                   image_model="dall-e-2"
                 />
               </div>
-              <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
+              <div className="row-span-6 grid grid-cols-2 min-h-0 p-4">
                 <div className="bg-blue-500 min-h-0 col-span-2">
                   <ScrollArea className="h-full">
                     <div className="p-4 grid grid-cols-4 gap-2">
@@ -268,7 +268,7 @@ export default function Home() {
                   </ScrollArea>
                 </div>
               </div>
-              <div className="row-span-1 bg-green-500 flex flex-row gap-10 items-center justify-center">
+              <div className="row-span-1 flex flex-row gap-10 items-center justify-center">
                 <AgentCardOwl
                   name="OW-el "
                   title="Pronunciation Coach"

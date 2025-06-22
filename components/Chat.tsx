@@ -154,7 +154,7 @@ export function Chat({
             <Textarea
               value={input}
               onChange={handleInputChange}
-              placeholder="Ask me anything about your story..."
+              placeholder="Start your story here..."
               className="flex-1 resize-none"
               rows={3}
               onKeyPress={handleKeyPress}
