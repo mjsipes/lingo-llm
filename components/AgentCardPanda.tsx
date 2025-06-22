@@ -95,19 +95,6 @@ const AgentCardPanda = ({
           </h4>
           <span className="text-sm font-medium text-white">{title}</span>
           
-          <div className="w-[200px] h-[160px] overflow-y-auto mt-2">
-            {isLoading ? (
-              <div className="text-white/80 text-xs">Generating image...</div>
-            ) : lastGeneratedImage ? (
-              <img 
-                src={lastGeneratedImage} 
-                alt="Generated image" 
-                className="w-full h-auto rounded-md"
-              />
-            ) : (
-              <div className="text-white/80 text-xs">{welcomeMessage}</div>
-            )}
-          </div>
         </div>
       </TooltipContent>
     </Tooltip>

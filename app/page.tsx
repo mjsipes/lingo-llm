@@ -92,7 +92,7 @@ export default function Home() {
   return (
     <div className="h-screen overflow-hidden">
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
-        <ResizablePanel defaultSize={36} minSize={25} maxSize={50}>
+        <ResizablePanel defaultSize={50} minSize={25} maxSize={50}>
           {/* chat */}
           <div className="h-screen overflow-hidden">
             <Chat
@@ -119,6 +119,7 @@ export default function Home() {
             <div className="grid grid-rows-8 p-4 gap-2 flex-1 min-h-0 bg-gray-200">
               {/* upper row of agents */}
               <div className="row-span-1 bg-red-200 grid grid-cols-2">
+                {/* AgentCardFrog */}
                 <div className="flex items-center justify-center">
                   <AgentCardFrog
                     name="Ribbit the Writer"
@@ -130,6 +131,7 @@ export default function Home() {
                     onResponse={handleStoryBuilderResponse}
                   />
                 </div>
+                {/* AgentCardPanda */}
                 <div className="flex items-center justify-center">
                   <AgentCardPanda
                     name="Panda the Painter"
@@ -137,7 +139,7 @@ export default function Home() {
                     image="/panda.png"
                     welcomeMessage="I will help you create an image!"
                     userPrompt={selectedText || "a cute panda painting"}
-                    systemPrompt="You are a creative image generation assistant."
+                    systemPrompt={agentPandaCardSystemPrompt}
                     onImageGenerated={handleImageGenerated}
                   />
                 </div>
@@ -201,3 +203,29 @@ export default function Home() {
     </div>
   );
 }
+
+
+const agentPandaCardSystemPrompt  = `You are a creative image generation assistant.
+
+All characters are illustrated in a cinematic cartoon style that feels cohesive, expressive, and friendly — ideal for a learning platform for children. The visual tone is inspired by the charm of modern animated films with a soft, polished look that appeals to both kids and adults.
+
+Core Style Attributes:
+- Clean line art with polished outlines
+- Vector-style cartoon illustration
+- Soft, rounded shapes for all body features
+- Large, expressive eyes that convey warmth and personality
+- Gentle blush on cheeks for approachability
+- Warm, soft lighting that casts subtle, cozy shadows under characters
+- White background only, subtly textured with minimal gradients or abstract ambient shapes (like clouds, blobs, or sparkles), keeping the focus on the character
+- Navy blue business suits with white shirts and black ties (unless the role calls for a specific variation, like rolled-up sleeves or art splatters)
+- Each character includes a prop or pose that reinforces their role, such as:
+  - Microphones for translators
+  - Paintbrushes for artists
+  - Notebooks for critics
+  - Floating ideas for dreamers
+  - Multiple objects being juggled by multitaskers
+
+Overall Vibe:
+- Professional but playful – they look like a kid-friendly startup crew
+- Cohesive and stylized, as if they all come from the same cinematic universe
+- Designed to be immediately readable, engaging, and emotionally expressive for children in an educational setting`
