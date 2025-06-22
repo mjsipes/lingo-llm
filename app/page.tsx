@@ -51,6 +51,7 @@ export default function Home() {
 
   const selectionProps = useTextSelection();
   const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState<string>();
+  const [pandaAgentUserPrompt, setPandaAgentUserPrompt] = useState<string>();
   const [backgroundContext, setBackgroundContext] = useState<string>("");
   const [immediateSubject, setImmediateSubject] = useState<string>("");
 
@@ -167,6 +168,42 @@ export default function Home() {
       setImageAgentUserPrompt(undefined);
     }
   }, [backgroundContext, immediateSubject]);
+
+  const createPandaPrompt = async () => {
+    try {
+      const response = await fetch("/api/groq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          systemPrompt:
+            "You are an expert at simplifying and condensing image generation prompts for DALL-E 2. Take the input prompt and create a simplified, concise version under 800 characters that emphasizes artistic, painting-like, and cartoonish drawing styles. Focus on the core visual elements and make it more digestible for image generation. Output only the simplified prompt.",
+          userPrompt: imageAgentUserPrompt,
+        }),
+      });
+      const data = await response.json();
+      const simplifiedPrompt = data.content || "";
+      console.log(`pandaAgentUserPrompt set to: ${simplifiedPrompt.slice(0, 100)}...`);
+      setPandaAgentUserPrompt(simplifiedPrompt);
+    } catch (error) {
+      console.error("Error creating panda prompt:", error);
+      console.log("pandaAgentUserPrompt set to: (error - fallback)");
+      setPandaAgentUserPrompt(imageAgentUserPrompt);
+    }
+  };
+
+  // useEffect for pandaAgentUserPrompt - simplifies imageAgentUserPrompt for DALL-E 2
+  useEffect(() => {
+    console.log("imageAgentUserPrompt useEffect called for panda prompt");
+    if (!imageAgentUserPrompt) {
+      console.log("pandaAgentUserPrompt set to: undefined");
+      setPandaAgentUserPrompt(undefined);
+      return;
+    }
+    createPandaPrompt();
+  }, [imageAgentUserPrompt]);
+
   const handleImageGenerated = (imageUrl: string) => {
     setImages((prev) => [...prev, imageUrl]);
   };
@@ -222,7 +259,7 @@ export default function Home() {
                   title="Creative Painter"
                   image="/panda.png"
                   welcomeMessage="Hi! I'm learning to paint and I love making cute, fun pictures that might be a little silly!"
-                  userPrompt={imageAgentUserPrompt || pandaSelfPortraitPrompt}
+                  userPrompt={pandaAgentUserPrompt || pandaSelfPortraitPrompt}
                   systemPrompt={agentPandaSystemPrompt}
                   onImageGenerated={handleImageGenerated}
                   image_model="dall-e-2"

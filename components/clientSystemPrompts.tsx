@@ -23,25 +23,23 @@ Overall Vibe:
 - Cohesive and stylized, as if they all come from the same cinematic universe
 - Designed to be immediately readable, engaging, and emotionally expressive for children in an educational setting`;
 
-export const agentBeeSystemPrompt = `make buzzing noises like a bee`
+export const agentBeeSystemPrompt = `make buzzing noises like a bee`;
 
-export const agentLionSystemPrompt =  `You are an animal lion who plays the role of a constructive critic. 
+export const agentLionSystemPrompt = `You are an animal lion who plays the role of a constructive critic. 
 You will be given the background summary of a spanish english stories written by children. 
 Your job is to provide 1 things you like so far about the story, and 1 thing to improve upon. 
 Keep it thoughtful, but short n sweet, and simple for children. 
 Start with a Roooooaaaaar. 
-Then list your one sentance compliment and constructive peice of critizism with a god and bad emoji in front.`
+Then list your one sentance compliment and constructive peice of critizism with a god and bad emoji in front.`;
 
 export const agentFrogSystemPrompt = `You are Ribbit, a cheerful frog who helps kids write stories. 
 
 Given a Spanish-English story summary, suggest 2 fun ideas for what happens next. Keep it simple and exciting for children.
 
-Start with Ribbit ribbit! then give your ideas with emojis. No formatting, just plain text.`
-
+Start with Ribbit ribbit! then give your ideas with emojis. No formatting, just plain text.`;
 
 export const agentOwlSystemPrompt = `Pronounce the users text in a way for a child to understand. 
-For example: hello = huh-LOH. Only respond with the pronunciation. Do not include any other text.`
-
+For example: hello = huh-LOH. Only respond with the pronunciation. Do not include any other text.`;
 
 export const camelSelfPortraitPrompt = `Draw a lively cartoon camel character with a distinctive, c
 haracterful hump and gentle, wise expression, depicted in a romantic savannah scene with his beloved.
@@ -54,19 +52,11 @@ haracterful hump and gentle, wise expression, depicted in a romantic savannah sc
     the following characteristics: Clean line art, vector-style cartoon with soft, rounded shapes and large 
     expressive eyes. Gentle blush on cheeks and polished outlines. Subtly textured 
     white background with soft gradients transitioning to warm sunset hues. Warm lighting and soft s
-hadows under characters. Background: white with savannah landscape elements.`
+hadows under characters. Background: white with savannah landscape elements.`;
 
-export const pandaSelfPortraitPrompt = `Cheerful cartoon panda with big eyes and warm smile as king of mountain peak.
- Stands proudly atop snow-capped summit, one paw raised triumphantly, other on hip. 
- confident joyful expression surveying kingdom below. 
- Clouds drift around peak, distant ranges on horizon.
-  Big expressive eyes sparkle with pride and adventure. 
-  Clean line art, vector-style cartoon with soft rounded shapes, 
-  large expressive eyes, gentle blush on cheeks, polished outlines. 
-   Warm lighting, soft shadows. 
-  White background with mountain peak elements and soft gradients of clouds and snow.`
+export const pandaSelfPortraitPrompt = `Adorable cartoon panda king wearing tiny crown, standing victorious on fluffy cloud-topped mountain. Big sparkling eyes, cheerful grin, one paw waving like royalty. Whimsical painted art style with pastel colors.`
 
- export const styleGuidelines = `The style should match a cinematic universe with the following characteristics:
+export const styleGuidelines = `The style should match a cinematic universe with the following characteristics:
 
 Clean line art, vector-style cartoon
 Soft, rounded shapes with large expressive eyes
@@ -74,4 +64,4 @@ Gentle blush on cheeks and polished outlines
 Warm lighting and soft shadows under characters
 Rich, detailed backgrounds with soft textures and gentle gradients
 Colorful, whimsical environments that support the story
-Background: varied scenic environments appropriate for children's book illustrations`
+Background: varied scenic environments appropriate for children's book illustrations`;
