@@ -46,8 +46,7 @@ haracterful hump and gentle, wise expression, depicted in a romantic savannah sc
     camels have large expressive eyes filled with love and contentment. In the distance, gentle rolling hills 
     and scattered wildlife complete the romantic landscape. The style should match a cinematic universe with 
     the following characteristics: Clean line art, vector-style cartoon with soft, rounded shapes and large 
-    expressive eyes. Gentle blush on cheeks and polished outlines. Characters wear navy blue business suits 
-    with white shirts and black ties (the female camel might wear a complementary outfit). Subtly textured 
+    expressive eyes. Gentle blush on cheeks and polished outlines. Subtly textured 
     white background with soft gradients transitioning to warm sunset hues. Warm lighting and soft s
 hadows under characters. Background: white with savannah landscape elements.`
 
@@ -58,7 +57,7 @@ export const pandaSelfPortraitPrompt = `Cheerful cartoon panda with big eyes and
   Big expressive eyes sparkle with pride and adventure. 
   Clean line art, vector-style cartoon with soft rounded shapes, 
   large expressive eyes, gentle blush on cheeks, polished outlines. 
-  Navy blue suit with white shirt as royal attire. Warm lighting, soft shadows. 
+   Warm lighting, soft shadows. 
   White background with mountain peak elements and soft gradients of clouds and snow.`
 
  export const styleGuidelines = `The style should match a cinematic universe with the following characteristics:
@@ -66,7 +65,6 @@ export const pandaSelfPortraitPrompt = `Cheerful cartoon panda with big eyes and
 Clean line art, vector-style cartoon
 Soft, rounded shapes with large expressive eyes
 Gentle blush on cheeks and polished outlines
-Characters wear navy blue business suits with white shirts and black ties (unless specified)
 Warm lighting and soft shadows under characters
 Rich, detailed backgrounds with soft textures and gentle gradients
 Colorful, whimsical environments that support the story

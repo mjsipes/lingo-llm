@@ -1,9 +1,7 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { Chat } from "@/components/Chat";
-
 import {
   Popover,
   PopoverContent,
@@ -49,62 +47,58 @@ export default function Home() {
     isLoading,
     setMessages,
   } = useChat();
-
   const [selectedText, setSelectedText] = useState("");
-  const [textareaContent, setTextareaContent] = useState("");
+
+
+  const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState() ;
+  const [agentLionUserPrompt, setAgentLionUserPrompt] = useState<string>();
+  
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [triggerPosition, setTriggerPosition] = useState({ x: 0, y: 0 });
   const [isUpperHalf, setIsUpperHalf] = useState(true);
-  const [agentLionUserPrompt, setAgentLionUserPrompt] = useState("hello");
-  const [imageAgentUserPrompt, setImageAgentUserPrompt] = useState() 
   
 
   useEffect(() => {
     if (messages.length === 0) {
-      setAgentLionUserPrompt("hello");
       return;
     }
-
     const last3Messages = messages.slice(-3);
     const formattedMessages = last3Messages
       .map((msg) => `${msg.role}: ${msg.content}`)
       .join("\n");
-
     setAgentLionUserPrompt(formattedMessages);
   }, [messages]);
 
   // Listen for text selection events and show copy popover when text is highlighted
-  useEffect(() => {
-    const handleMouseUp = () => {
-      setTimeout(() => {
-        const selection = window.getSelection();
-        const selectionText = selection?.toString();
+useEffect(() => {
+  const handleMouseUp = () => {
+    setTimeout(() => {
+      const selection = window.getSelection();
+      const selectionText = selection?.toString();
+      if (selectionText && selectionText.length > 0 && selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const upperHalf = rect.bottom < viewportHeight / 2;
+        setIsUpperHalf(upperHalf);
+        setTriggerPosition({
+          x: rect.left + rect.width / 2,
+          y: upperHalf ? rect.bottom + 5 : rect.top - 5,
+        });
+        setSelectedText(selectionText);
+        setIsPopoverOpen(true);
+      } else {
+        setIsPopoverOpen(false);
+      }
+    }, 10);
+  };
 
-        if (selectionText && selectionText.length > 0) {
-          const range = selection.getRangeAt(0);
-          const rect = range.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          const upperHalf = rect.bottom < viewportHeight / 2;
+  document.addEventListener("mouseup", handleMouseUp);
 
-          setIsUpperHalf(upperHalf);
-          setTriggerPosition({
-            x: rect.left + rect.width / 2,
-            y: upperHalf ? rect.bottom + 5 : rect.top - 5,
-          });
-
-          setIsPopoverOpen(true);
-        } else {
-          setIsPopoverOpen(false);
-        }
-      }, 10);
-    };
-
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, []);
+  return () => {
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+}, []);
 
   // Copy selected text to clipboard and trigger toast notification
   const handleCopyClick = async () => {
@@ -129,10 +123,6 @@ export default function Home() {
         console.log("Failed to copy");
       }
     }
-  };
-
-  const handleStoryBuilderResponse = (response: string) => {
-    setTextareaContent((prev) => prev + response);
   };
 
   const handleImageGenerated = (imageUrl: string) => {
@@ -168,7 +158,6 @@ export default function Home() {
           </Button>
         </PopoverContent>
       </Popover>
-
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
         <ResizablePanel defaultSize={36} minSize={25} maxSize={50}>
           {/* chat */}
@@ -206,7 +195,6 @@ export default function Home() {
                     welcomeMessage="I will help you build your story! Highlight the snippet of text you want me to add, then I will add it to your story."
                     userPrompt={selectedText || "hello"}
                     systemPrompt={agentFrogSystemPrompt}
-                    onResponse={handleStoryBuilderResponse}
                     isPopoverOpen={isPopoverOpen}
                   />
                 </div>
@@ -236,11 +224,6 @@ export default function Home() {
               </div>
               {/* story building area */}
               <div className="row-span-6 bg-red-500 grid grid-cols-2 min-h-0">
-                {/* <Textarea
-                  className="bg-white border-0 focus-visible:ring-0 rounded-none resize-none h-full"
-                  value={textareaContent}
-                  onChange={(e) => setTextareaContent(e.target.value)}
-                /> */}
                 <div className="bg-blue-500 min-h-0 col-span-2">
                   <ScrollArea className="h-full">
                     <div className="p-4 grid grid-cols-4 gap-2">
@@ -275,7 +258,7 @@ export default function Home() {
                   title="Constructive Critic"
                   image="/lion2.png"
                   welcomeMessage="Hello! I specialize in providing thoughtful feedback and constructive criticism on your story."
-                  userPrompt={agentLionUserPrompt}
+                  userPrompt={agentLionUserPrompt || "hello"}
                   systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={isPopoverOpen}
                 />
