@@ -33,6 +33,7 @@ export function Chat({
   selectedText 
 }: ChatProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const scrollToBottom = () => {
@@ -62,6 +63,7 @@ export function Chat({
   const handlePinguClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsOpen(true);
+    textareaRef.current?.focus();
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -155,6 +157,7 @@ export function Chat({
         <form onSubmit={handleSubmit} className="w-full">
           <div className="flex gap-2">
             <Textarea
+              ref={textareaRef}
               value={input}
               onChange={handleInputChange}
               placeholder="Start your story here..."
