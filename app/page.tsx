@@ -90,7 +90,7 @@ export default function Home() {
                     name="Palette the Camel"
                     title="Creative Painter"
                     image="/camel.png"
-                    welcomeMessage="I will help you create an image!"
+                    welcomeMessage="Hi! I'm really good at making awesome pictures for your stories!"
                     userPrompt={imageAgentUserPrompt || camelSelfPortraitPrompt}
                     systemPrompt={agentPandaSystemPrompt}
                     onImageGenerated={handleImageGenerated}
@@ -100,7 +100,7 @@ export default function Home() {
                     name="Panda the Painter"
                     title="Creative Painter"
                     image="/panda.png"
-                    welcomeMessage="I will help you create an image!"
+                    welcomeMessage="Hi! I'm learning to paint and I love making cute, fun pictures that might be a little silly!"
                     userPrompt={imageAgentUserPrompt || pandaSelfPortraitPrompt}
                     systemPrompt={agentPandaSystemPrompt}
                     onImageGenerated={handleImageGenerated}
@@ -131,7 +131,7 @@ export default function Home() {
                   name="OW-el "
                   title="Pronunciation Coach"
                   image="/owl2.png"
-                  welcomeMessage="Hello! I will help spell out words. Highlight the text you want me to pronounce, then click on my icon!"
+                  welcomeMessage="Hi there! I'll help you learn how to say words out loud. Copy any text and click on me!"
                   userPrompt={selectionProps.selectedText || "Hello"}
                   systemPrompt={agentOwlSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
@@ -140,7 +140,7 @@ export default function Home() {
                   name="AI Lion"
                   title="Constructive Critic"
                   image="/lion2.png"
-                  welcomeMessage="Hello! I specialize in providing thoughtful feedback and constructive criticism on your story."
+                  welcomeMessage="Hello! I help make your stories even better by giving you helpful tips and ideas."
                   userPrompt={agentLionUserPrompt || "hello"}
                   systemPrompt={agentLionSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
@@ -149,7 +149,7 @@ export default function Home() {
                   name="Ribbit"
                   title="Creative Writing Assistant"
                   image="/frog.png"
-                  welcomeMessage="I love to give ideas on what direction your story should go."
+                  welcomeMessage="I love to give ideas about what fun things could happen next in your story!"
                   userPrompt={selectionProps.selectedText || "hello"}
                   systemPrompt={agentFrogSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
@@ -158,7 +158,7 @@ export default function Home() {
                   name="AI Bees"
                   title="Vocabulary Builder"
                   image="/bees.png"
-                  welcomeMessage="We will help send your book out to the world!"
+                  welcomeMessage="Buzz buzz! We will help turn your story into a book you can share with the world!"
                   userPrompt="make buzzing noises like a bee"
                   systemPrompt={agentBeeSystemPrompt}
                   isPopoverOpen={selectionProps.isPopoverOpen}
