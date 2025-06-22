@@ -10,4 +10,9 @@ right now i need to add debug infor for agentcardfox.
 add caching to the owl
 beez need to work
 getting context for each image.
-global layout
+
+fix panda.
+fix bee.
+presenation + readme + actually play with the app
+
+

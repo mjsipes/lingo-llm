@@ -258,8 +258,8 @@ export default function Home() {
                                   <Image
                                     src={image}
                                     alt="Generated artwork - enlarged"
-                                    width={480}
-                                    height={480}
+                                    width={400}
+                                    height={380}
                                     className="rounded-lg"
                                   />
                                 </div>
