@@ -27,10 +27,8 @@ import {
 import { toast } from "sonner";
 
 export default function Home() {
-
-
   // application state
-  const images = ["/owl2.png", "/lion2.png", "/bees.png"];
+  const [images, setImages] = useState(["/owl2.png", "/lion2.png", "/bees.png"]);
   const {
     messages,
     input,
@@ -41,7 +39,6 @@ export default function Home() {
   } = useChat();
   const [selectedText, setSelectedText] = useState("");
   const [textareaContent, setTextareaContent] = useState("");
-
 
   // use effects
   useEffect(() => {
@@ -85,9 +82,13 @@ export default function Home() {
 
   const handleStoryBuilderResponse = (response: string) => {
     setTextareaContent(prev => prev + response);
-   };
+  };
 
-   //page
+  const handleImageGenerated = (imageUrl: string) => {
+    setImages(prev => [...prev, imageUrl]);
+  };
+
+  //page
   return (
     <div className="h-screen overflow-hidden">
       <ResizablePanelGroup direction="horizontal" className="h-screen w-full">
@@ -130,14 +131,14 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex items-center justify-center">
-                <AgentCardFrog
+                  <AgentCardPanda
                     name="Panda the Painter"
                     title="Creative Painter"
                     image="/panda.png"
                     welcomeMessage="I will help you create an image!"
-                    userPrompt={selectedText || "hello"}
-                    systemPrompt="You are a creative writing assistant. Your response will be directly added to a story in a text box. Please only output the info from the user prompt."
-                    onResponse={handleStoryBuilderResponse}
+                    userPrompt={selectedText || "a cute panda painting"}
+                    systemPrompt="You are a creative image generation assistant."
+                    onImageGenerated={handleImageGenerated}
                   />
                 </div>
               </div>
@@ -151,20 +152,8 @@ export default function Home() {
                 <div className="bg-blue-500 min-h-0">
                   <ScrollArea className="h-full">
                     <div className="p-4 grid grid-cols-2 gap-2">
-                      {images.map((image) => (
-                        <div key={image} className="w-full">
-                          <Image
-                            src={image}
-                            alt="image"
-                            width={150}
-                            height={150}
-                            className="w-full h-auto"
-                          />
-                        </div>
-                      ))}
-
                       {images.map((image, index) => (
-                        <div key={`${image}-${index}-2`} className="w-full">
+                        <div key={`${image}-${index}`} className="w-full">
                           <Image
                             src={image}
                             alt="image"
