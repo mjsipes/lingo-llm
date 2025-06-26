@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   } else {
     // Default to Claude
     console.log("hitting claude through chat");
-    modelConfig = anthropic('claude-4-sonnet-20250514');
+    modelConfig = anthropic('claude-3-7-sonnet-20250219');
     providerOptions = {
       anthropic: {
         thinking: { type: 'enabled', budgetTokens: 15000 },
