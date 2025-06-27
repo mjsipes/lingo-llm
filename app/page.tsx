@@ -21,6 +21,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useTextSelection, SelectionPopover } from "@/components/CopyClick";
+import { useAuth } from "@/lib/supabase/AuthProvider";
 import {
   agentPandaSystemPrompt,
   agentBeeSystemPrompt,
@@ -35,6 +36,23 @@ import {
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const user = useAuth();
+
+  // Debugging useEffect to display user info
+  useEffect(() => {
+    console.log("=== USER DEBUG INFO ===");
+    console.log("Full user object:", user);
+    if (user) {
+      console.log("User ID:", user.id);
+      console.log("User metadata:", user.user_metadata);
+      console.log("User app metadata:", user.app_metadata);
+      console.log("Is anonymous:", user.is_anonymous);
+      console.log("Created at:", user.created_at);
+    } else {
+      console.log("No user found");
+    }
+    console.log("======================");
+  }, [user]);
 
   const {
     messages,
