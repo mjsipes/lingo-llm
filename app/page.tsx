@@ -262,8 +262,6 @@ export default function Home() {
                 handleInputChange={handleInputChange}
                 handleSubmit={handleSubmit}
                 isLoading={isLoading}
-                setMessages={setMessages}
-                selectedText={selectionProps.selectedText}
               />
             </div>
           </ResizablePanel>
