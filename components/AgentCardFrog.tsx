@@ -13,7 +13,6 @@ const AgentCardFrog = ({
   name,
   title,
   image,
-  welcomeMessage,
   systemPrompt,
   userPrompt,
   isPopoverOpen,
@@ -29,7 +28,7 @@ const AgentCardFrog = ({
 
   onResponse?: (response: string) => void;
 }) => {
-  const { messages, append, isLoading, setMessages } = useChat({
+  const { append, isLoading, setMessages } = useChat({
     api: "/api/chat",
     body: {
       model: "groq",

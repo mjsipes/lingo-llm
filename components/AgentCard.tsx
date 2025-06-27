@@ -28,11 +28,7 @@ const AgentCard = ({
 }) => {
   const {
     messages,
-    input,
-    handleInputChange,
-    handleSubmit,
     isLoading,
-    setMessages,
     append,
   } = useChat({
     api: "/api/chat",

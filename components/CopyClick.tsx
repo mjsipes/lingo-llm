@@ -69,7 +69,7 @@ export function useTextSelection() {
               : selection,
           position: "top-right",
         });
-      } catch (err) {
+      } catch {
         console.log("Failed to copy");
       }
     }

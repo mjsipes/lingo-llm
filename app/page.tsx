@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { Chat } from "@/components/Chat";
 import AgentCard from "@/components/AgentCard";
-import AgentCardFrog from "@/components/AgentCardFrog";
 import ImageAgent from "@/components/ImageAgent";
 import AgentCardOwl from "@/components/AgentCardOwl";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -18,8 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { X, Coins } from "lucide-react";
+import { Coins } from "lucide-react";
 import Image from "next/image";
 import {
   ResizableHandle,
@@ -41,7 +39,6 @@ import {
 
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { user, refreshUser } = useAuth();
 
   // Debugging useEffect to display user info
@@ -228,10 +225,6 @@ export default function Home() {
     setImages((prev) => [...prev, imageUrl]);
     // Refresh user data to update credits display
     refreshUser();
-  };
-
-  const handleDeleteImage = (indexToDelete: number) => {
-    setImages((prev) => prev.filter((_, index) => index !== indexToDelete));
   };
 
   return (

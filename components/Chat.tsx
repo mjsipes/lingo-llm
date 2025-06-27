@@ -2,25 +2,29 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowUp } from "lucide-react";
+import Image from "next/image";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}
+
 interface ChatProps {
-  messages: any[];
+  messages: Message[];
   input: string;
-  handleInputChange: (e: any) => void;
-  handleSubmit: (e: any) => void;
+  handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleSubmit: (e: React.FormEvent) => void;
   isLoading: boolean;
-  setMessages: (messages: any[]) => void;
-  selectedText: string;
 }
 
 export function Chat({ 
@@ -28,9 +32,7 @@ export function Chat({
   input, 
   handleInputChange, 
   handleSubmit, 
-  isLoading, 
-  setMessages,
-  selectedText 
+  isLoading
 }: ChatProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -88,10 +90,12 @@ export function Chat({
             </Button>
           </TooltipTrigger>
           <TooltipContent className="flex flex-row gap-4">
-            <img
+            <Image
               src="/penguin.png"
               alt="Pingu Penguin avatar"
-              className="h-48 w-48 rounded-md"
+              width={192}
+              height={192}
+              className="rounded-md"
             />
             <div className="gap-2">
               <div className="flex flex-row items-center gap-2">

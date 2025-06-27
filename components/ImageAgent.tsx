@@ -11,10 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ImageAgent = ({
   name,
-  title,
   image,
-  welcomeMessage,
-  systemPrompt,
   userPrompt,
   isPopoverOpen,
   image_model,
@@ -33,9 +30,6 @@ const ImageAgent = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [lastGeneratedImage, setLastGeneratedImage] = useState<string | null>(
-    null
-  );
 
   const handleClick = async (e: React.MouseEvent) => {
     console.log("clicked. sending req to image api");
@@ -64,7 +58,6 @@ const ImageAgent = ({
       const data = await response.json();
       const imageUrl = data.imageUrl;
       console.log("image recieved, adding url to array");
-      setLastGeneratedImage(imageUrl);
 
       if (onImageGenerated) {
         onImageGenerated(imageUrl);
