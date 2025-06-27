@@ -1,5 +1,7 @@
 # lingo llm 🐧
 
+**Live App: https://lingo-llm.vercel.app/**
+
 Lingo LLM is a language learning website where users can engage with little anthropomorphic characters to learn Spanish through AI-powered storytelling.
 
 ## TLDR

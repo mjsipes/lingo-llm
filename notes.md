@@ -1,42 +1,30 @@
 write me a story. start with a boy who gets lost in the desert. include the words trees, leaves, branches, and bark
 
 
-my mind is racing so i need to settle down and pick out my baby steps because i dont even know what im doing.
-big picture there will be no text, big picture it will jsut be image, big picture we need to change from sonner to a better mode. 
-right now i need to add debug infor for agentcardfox.
 
+next steps
+add caching to the owl response
+add functionality for beez
+further purse rthe image generation to create story books. To prove how good the image generation could be I should turn the Bible into a picturbook. i can implement rolling averages of summarizations of the text to get background context and immediate subject. there should always be style guide, i should do research on how best to do this. the biggest challenge will be locking down character attributes so characters look the same through out the story. i will have to research how to do this more.
 
-
-add caching to the owl
-beez need to work
-getting context for each image.
-
-fix panda.
-fix bee.
-presenation + readme + actually play with the app
-
-
-demo plus diagram
-
-i have a really solid idea of vercel and supabase now which is exciting, and the tools of a lot of these ai hackathon companies. i am actually really exciting about hwo that hackathon did for me. i need to make this project better, than go through my investigations, engange in my little smalller projects, and then i will be ready for my next hackathon. yeah sounds good with me. lets accumulate al of the notes here. 
+internal notes
+i have a really solid idea of vercel and supabase now which is exciting, and the tools of a lot of these ai hackathon companies. i am actually really exciting about hwo that hackathon did for me. i need to make this project better, than go through my investigations, engange in my little smalller projects, and then i will be ready for my next hackathon. 
 
 i think that everythign in the world is possible to change.
-
-Even smaller if a human coordinates, when will it be able to do the stirring, for thing people don’t want to be involved with, when will it just be able to do the dishes
-
-To prove how good it is I should turn the Bible into a picturbook
-
+Even smaller if a human coordinates, when will it be able to do the stirring of a cake, for thing people don’t want to be involved with, when will it just be able to do the dishes
 can ai robot bake a cake itself.
 computers have stressed people out
 
 https://claude.ai/share/c6052ce0-58f0-46b2-8ffd-bbb6e3416991
 
 
-okay i should share all my links to this project somewhere. just so everything about this proejct is documented. now with my idea of rolling averages, rag sounds very unique, im basically doing a log first search accurately and rag is like a hashmap. they are kind of like the datastructures of ai. this is ata least unti we understand how to put the datastructures into the ai, that will be a whole nother thing, but right now we are in an age of combinging classical computing with ai to make something poweferul, until ai does all of classical computing as well. that is a good qeustion, when will ai do all of classical computing as well?
+okay i should share all my links to this project somewhere. just so everything about this proejct is documented. now with my idea of rolling averages, rag sounds very unique, rag is like a hashmap over data, whereas my idea of rolling averages is like convolutions summing/ condensing context to feed back into the llm. . they are kind of like the datastructures of ai. this is ata least unti we understand how to put the datastructures into the ai, that will be a whole nother thing, but right now we are in an age of combinging classical computing with ai to make something poweferul, until ai does all of classical computing as well. that is a good qeustion, when will ai do all of classical computing as well?
 
 like when will the ai itself be able to use those datastructures? and these should be datastructures, not full on products.
 
-maybe i can make moves in scilence. then i make it something that chat gpt can do or something. with a credit limit, i guess i ma saying it will be a website to upload any peice of content for images, for each secen, then it needs to be any piece of content and any type of image. 
+
 
 
 addd agent for conjugation table and definiont.
+
+i think it is possible for anything to change in the universe. the the questions is if you like it so much do you want ot build it or go acquisition route.  better file system for claude. so you first look to the toptwo competitors. are they doing that? i get that as a new person to a company you get seen as ineperiences and i done know if you guys accept or dont acpet input from newer people but i would probeably have pretty good input after a few months. that is just one of my positive predictions about my self. that is not . perplexity is a good idea, it is the ability to plug n play any ai models with one outlet. so is perplexity the outlet, or are they search? why i feel like is ontop of the outlet. but acquisition route or non acquisition route what is my take? i think that everything is possible to change / not that not everything is possible to change. shoot know i see how layers think so fast. professions might not be dead. but does that mean learning is dead to? maybe there will be professions just not people doing it? i dont konw well first lets think about what a profession is? acqutisiont routhe versus non acguisition root. if peolep ask me thtat question i default to acguisition because its like right now im traeting it as a profession and not a passion. so if/ when it falls and hunger and such, we just have to look at the last 20 years and then the last 20 years. i am only old enough to remember how time has changed over 20 years. what made you decide to say that? i say i would default to acquisition because i am doing this as a way to make money and leave i would rather just not work for a living i dont think anybody wants to work. ive got to have compassion for nate / everybody. well its lik if i choose to make comasssion for him it should not be because he is pressuring me to do that because i can always leave for ever. i do give credit to people who want it more but i think i am doing a better job at blau bla blau. i think it is far to say it is becoming much harder to be imployable because professions are becoming dead. no one will be working and everybody will be contributing in other ways. if they do not have self driving vehicales peopel will be driving with ai as asafety most of the time, kind of like a rocket ship that does what it can when it doesn but only alerts the crew when it does not know how to procees itself. just like rocket ships. we might find rockets habital for people soon and then we will have to figure out rocket ships, soon everybody will be on rocket ships, or we will be sending life to other ships. it honestly seems so true and obvious, who is going to go to space? well is there any point in hte ancestors goig to space to dies? its more like this is going to happen, I right now at this very moment can make money out of techincology i htink that is what im trying to do and then this is all just what im telling you i think is going to happen, whether i care for it or dont im not saying anything about how it makes me feel. im just tellingyou what i think is going to happen? one of my predicitons about when everybody will be going off from earth is , with space ships, like why can space suits not give you everything you need why can we not go to space forever, my main questio is when people split off to space what will it look like, will everybody be going, some people question will we put something on another planet before life goes out of extintion like with the dinosour extinsion, if we make it past the dinosours then who would think it is cool? we would think it is cool, will the dinosours all think it is cool or not? because they are exciting? i wonder if they yare up there ,somewhere ,or around here i dont know thats a question of religion. one question i have is what professions/ areas of study have jursdiction over different domains of thinking, which professions are subsets of other juristditictions. maybe i can make this jurisdiction tree myseflf. we truly represent it in natural english language. okay i see now, so we create an app prototype, write out in english language exactly what thu purpose of something is in natural language and diagram breadown. this means function comments, code comments, readme = the indtroduction but then also summary of how everything works inside and out so yes i think everything is included. i must have a super descriptive something about my project somewhere, and then the readme pulls from that to create the summary. the description is purly supposed to be about the project and the tech nad then if i want to track my journey, then that is a separate thing like maybe in my daily notes. then the question is, a daily note of the daily notes or daily notes of my personal thoughts into the repository?. do i keep every secret in one place or do i default to keeping secrets exactly in the place they are like with env variables and then choose to clump secrets into the center later. env variables it hte question. why do we not have central env variables? would that be better or worse? because of privacy and safety does it matter? or should everything be in one place. but yeah secretes stay secret so in that case we can keep these notes in. clearly i am thinking like a designer, and thought proverker, and not like a social business person so i might need to loook for imput from them.
