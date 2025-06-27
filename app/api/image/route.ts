@@ -56,11 +56,27 @@ export async function POST(req: Request) {
     console.log("RESPONSE: api/image ... ");
     const imageUrl = data.data[0].url;
 
+    // Fetch fresh credit count right before decrementing to avoid race conditions
+    const { data: { user: freshUser }, error: freshUserError } = await supabase.auth.getUser();
+    
+    if (freshUserError || !freshUser) {
+      console.error("Error fetching fresh user data:", freshUserError);
+      return Response.json({ imageUrl }); // Still return the image, but don't update credits
+    }
+
+    const freshCredits = freshUser.user_metadata?.credits || 0;
+    console.log(`Fresh credit check: ${freshCredits} credits remaining`);
+
+    if (freshCredits < 1) {
+      console.log("No credits remaining after fresh check, skipping decrement");
+      return Response.json({ imageUrl }); // Still return the image, but don't update credits
+    }
+
     // Deduct 1 credit after successful image generation
-    const newCredits = currentCredits - 1;
+    const newCredits = freshCredits - 1;
     const { error: updateError } = await supabase.auth.updateUser({
       data: { 
-        ...user.user_metadata,
+        ...freshUser.user_metadata,
         credits: newCredits 
       }
     });
@@ -68,7 +84,7 @@ export async function POST(req: Request) {
     if (updateError) {
       console.error("Error updating credits:", updateError);
     } else {
-      console.log(`Credits updated: ${currentCredits} -> ${newCredits}`);
+      console.log(`Credits updated: ${freshCredits} -> ${newCredits}`);
     }
 
     return Response.json({ imageUrl });

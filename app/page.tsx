@@ -12,8 +12,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, Coins } from "lucide-react";
 import Image from "next/image";
 import {
   ResizableHandle,
@@ -229,20 +235,29 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col">
-      <SelectionPopover {...selectionProps} />
-      {/* Header - fixed height */}
-      <div className="py-[10px] border-b flex-shrink-0 flex justify-between items-center px-6">
-        <div></div> {/* Left spacer */}
-        <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
-          lingo llm
-        </h1>
-        <div className="bg-rose-200 px-3 py-1 rounded-lg">
-          <span className="text-black text-sm font-medium">
-            {user?.user_metadata?.credits || 0} image credits!
-          </span>
+    <TooltipProvider>
+      <div className="h-screen overflow-hidden flex flex-col">
+        <SelectionPopover {...selectionProps} />
+        {/* Header - fixed height */}
+        <div className="py-[10px] border-b flex-shrink-0 flex justify-between items-center px-6">
+          <div></div> {/* Left spacer */}
+          <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
+            lingo llm
+          </h1>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="bg-rose-200 px-3 py-1 rounded-lg flex items-center gap-2 cursor-help">
+                <span className="text-black text-sm font-medium">
+                  {user?.user_metadata?.credits || 0}
+                </span>
+                <Coins className="w-4 h-4 text-black" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Image credits remaining</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
-      </div>
       {/* Resizable area - takes remaining height */}
       <div className="flex-1 min-h-0">
         <ResizablePanelGroup direction="horizontal" className="h-full w-full">
@@ -384,7 +399,8 @@ export default function Home() {
             </div>
           </ResizablePanel>
         </ResizablePanelGroup>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
