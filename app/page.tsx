@@ -227,7 +227,6 @@ export default function Home() {
   };
 
   return (
-    <TooltipProvider>
       <div className="h-screen overflow-hidden flex flex-col">
         <SelectionPopover {...selectionProps} />
         {/* Header - fixed height */}
@@ -238,7 +237,7 @@ export default function Home() {
           </h1>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="bg-rose-200 px-3 py-1 rounded-lg flex items-center gap-2 cursor-help">
+              <div className="bg-rose-200 px-3 py-1 rounded-lg flex items-center gap-2">
                 <span className="text-black text-sm font-medium">
                   {user?.user_metadata?.credits || 0}
                 </span>
@@ -391,6 +390,5 @@ export default function Home() {
         </ResizablePanelGroup>
         </div>
       </div>
-    </TooltipProvider>
   );
 }
