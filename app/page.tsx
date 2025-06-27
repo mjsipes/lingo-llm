@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import { Chat } from "@/components/Chat";
 import AgentCard from "@/components/AgentCard";
@@ -228,6 +228,7 @@ export default function Home() {
 
   return (
       <div className="h-screen overflow-hidden flex flex-col">
+
         <SelectionPopover {...selectionProps} />
         {/* Header - fixed height */}
         <div className="py-[10px] border-b flex-shrink-0 flex justify-between items-center px-6">

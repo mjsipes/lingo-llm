@@ -27,7 +27,9 @@ export function useTextSelection() {
           selection.rangeCount > 0
         ) {
           const range = selection.getRangeAt(0);
+          console.log("selected text range: ", range);
           const rect = range.getBoundingClientRect();
+          console.log("selected text rect: ", rect);
           const viewportHeight = window.innerHeight;
           const upperHalf = rect.bottom < viewportHeight / 2;
           setIsUpperHalf(upperHalf);
@@ -35,8 +37,6 @@ export function useTextSelection() {
             x: rect.left + rect.width / 2,
             y: upperHalf ? rect.bottom + 5 : rect.top - 5,
           });
-          // Remove this line:
-          // setSelectedText(selectionText);
           setIsPopoverOpen(true);
         } else {
           setIsPopoverOpen(false);

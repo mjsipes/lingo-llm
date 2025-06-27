@@ -13,6 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { WireOverlay } from "./WireOverlay";
 
 interface ChatProps {
   messages: Message[];
@@ -22,16 +23,64 @@ interface ChatProps {
   isLoading: boolean;
 }
 
-export function Chat({ 
-  messages, 
-  input, 
-  handleInputChange, 
-  handleSubmit, 
-  isLoading
+export function Chat({
+  messages,
+  input,
+  handleInputChange,
+  handleSubmit,
+  isLoading,
 }: ChatProps) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [boxPosition, setBoxPosition] = useState({ x: 0, y: 0 }); // Step 2a
+  const panelRef = useRef<HTMLDivElement>(null);
+  const topButtonRef = useRef<HTMLButtonElement>(null);
+  const [topButtonPosition, setTopButtonPosition] = useState({ x: 0, y: 0 });
+
+
+const updateButtonPositions = () => {
+  // Top button: left center
+  if (topButtonRef.current) {
+    const rect = topButtonRef.current.getBoundingClientRect();
+    setTopButtonPosition({
+      x: rect.right,
+      y: rect.top + rect.height / 2,
+    });
+  }
+  // Send button: top center
+  if (buttonRef.current) {
+    const rect = buttonRef.current.getBoundingClientRect();
+    setBoxPosition({
+      x: rect.left,
+      y: rect.top + rect.height / 2,
+    });
+  }
+};
+
+useEffect(() => {
+  updateButtonPositions(); // On mount
+
+  window.addEventListener("resize", updateButtonPositions);
+
+  let observer: ResizeObserver | null = null;
+  if (panelRef.current) {
+    observer = new ResizeObserver(() => {
+      updateButtonPositions();
+    });
+    observer.observe(panelRef.current);
+  }
+
+  return () => {
+    window.removeEventListener("resize", updateButtonPositions);
+    if (observer && panelRef.current) {
+      observer.unobserve(panelRef.current);
+    }
+  };
+}, []);
+  
+  
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
@@ -67,16 +116,19 @@ export function Chat({
     setIsOpen(open);
   };
 
-  const pinguWelcomeMessage = "Hi! I'm your main storytelling buddy! Tell me about your adventures and I'll help bring your ideas to life!";
+  const pinguWelcomeMessage =
+    "Hi! I'm your main storytelling buddy! Tell me about your adventures and I'll help bring your ideas to life!";
   const pinguTitle = "Story Companion";
 
   return (
     <div className="flex flex-col h-full w-full bg-background">
+
+
       {/* Pingu Header with Button Treatment */}
-      <div className="flex items-center justify-center pt-4">
+      <div ref={panelRef} className="flex items-center justify-center pt-4">
         <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
           <TooltipTrigger asChild>
-            <Button className="py-8" onClick={handlePinguClick}>
+            <Button className="py-8" onClick={handlePinguClick} ref={topButtonRef}>
               <Avatar className="h-12 w-12">
                 <AvatarImage src="/penguin.png" />
                 <AvatarFallback>P</AvatarFallback>
@@ -97,11 +149,15 @@ export function Chat({
                 <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-white">
                   Pingu Penguin
                 </h4>
-                <span className="text-sm font-medium text-white">{pinguTitle}</span>
+                <span className="text-sm font-medium text-white">
+                  {pinguTitle}
+                </span>
               </div>
 
               <div className="w-[240px] h-[160px] overflow-y-auto">
-                <div className="text-white/80 text-xs">{pinguWelcomeMessage}</div>
+                <div className="text-white/80 text-xs">
+                  {pinguWelcomeMessage}
+                </div>
               </div>
             </div>
           </TooltipContent>
@@ -133,12 +189,14 @@ export function Chat({
                     message.content
                   ) : (
                     <div>
-                      {!message.content && isLoading && index === messages.length - 1 ? (
+                      {!message.content &&
+                      isLoading &&
+                      index === messages.length - 1 ? (
                         <span className="text-muted-foreground animate-pulse">
                           Thinking...
                         </span>
                       ) : (
-                        <span style={{ whiteSpace: 'pre-wrap' }}>
+                        <span style={{ whiteSpace: "pre-wrap" }}>
                           {message.content}
                         </span>
                       )}
@@ -168,12 +226,14 @@ export function Chat({
             <Button
               type="submit"
               onClick={handleSubmit}
+              ref={buttonRef}
               disabled={!input.trim() || isLoading}
               size="sm"
               className="h-8 w-8"
             >
               <ArrowUp className="w-4 h-4" />
             </Button>
+            <WireOverlay from={boxPosition} to={topButtonPosition} />
           </div>
         </form>
       </div>
