@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
-import { ClientAuthWrapper } from "@/components/ClientAuthWrapper";
+import { AuthProvider } from "@/lib/supabase/AuthProvider";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -35,9 +35,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClientAuthWrapper>
+          <AuthProvider>
             {children}
-          </ClientAuthWrapper>
+          </AuthProvider>
           <Toaster />
         </ThemeProvider>
       </body>
