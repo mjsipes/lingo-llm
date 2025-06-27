@@ -63,7 +63,6 @@ export default function Home() {
     handleInputChange,
     handleSubmit,
     isLoading,
-    setMessages,
   } = useChat();
 
   const selectionProps = useTextSelection();
