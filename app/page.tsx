@@ -36,7 +36,7 @@ import {
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const user = useAuth();
+  const { user, refreshUser } = useAuth();
 
   // Debugging useEffect to display user info
   useEffect(() => {
@@ -220,6 +220,8 @@ export default function Home() {
 
   const handleImageGenerated = (imageUrl: string) => {
     setImages((prev) => [...prev, imageUrl]);
+    // Refresh user data to update credits display
+    refreshUser();
   };
 
   const handleDeleteImage = (indexToDelete: number) => {
@@ -230,10 +232,16 @@ export default function Home() {
     <div className="h-screen overflow-hidden flex flex-col">
       <SelectionPopover {...selectionProps} />
       {/* Header - fixed height */}
-      <div className="py-[10px] border-b flex-shrink-0">
+      <div className="py-[10px] border-b flex-shrink-0 flex justify-between items-center px-6">
+        <div></div> {/* Left spacer */}
         <h1 className="text-4xl font-extrabold tracking-tight text-primary text-center">
           lingo llm
         </h1>
+        <div className="bg-rose-200 px-3 py-1 rounded-lg">
+          <span className="text-black text-sm font-medium">
+            {user?.user_metadata?.credits || 0} image credits!
+          </span>
+        </div>
       </div>
       {/* Resizable area - takes remaining height */}
       <div className="flex-1 min-h-0">
